@@ -1,0 +1,65 @@
+
+
+<link rel="stylesheet" href="../../css/szindex.css" type="text/css"></link>
+<script src="http://lib.sinaapp.com/js/jquery/1.9.1/jquery-1.9.1.js"></script>
+<script type="text/javascript">
+!window.jQuery && document.write('<script src=../../js/jquery-1.9.1.js><\/script>');
+</script>
+<script type="text/javascript" src="../../js/adailytalk.js"></script>
+
+
+	<div id="knowledgeInformation">
+	<form name="formPoint" method="post">
+		<table width="680" border="0" cellpadding="0" cellspacing="0">
+			<tr align="center">
+				<td height="65" colspan="6" align="center" valign="middle"><img src="images/adt1.jpg" width="595" height="33"></td>
+		 	</tr>
+			<tr height="43">
+				<td width="10%" class="fontColor linefontsize" align="right">学期编号：&nbsp;</td>
+				<td width="8%"><input name='semester' id="semesterS1" type='radio' onClick="checkSemesters('S1')" value='S1' checked/>S1</td>
+				<td width="8%"><input name='semester' id="semesterS2" type='radio' onClick="checkSemesters('S2')" value='S2' />S2 </td>
+				<td width="14%"><input name='semester' id="semesterS3"  type='radio'  value='S3' onClick="checkSemesters('S3')" />S3</td>
+				<td width="30%" class="fontColor linefontsize">讲解班级：&nbsp;
+				<select name='examineeClass' class='select2' id='examineeClass' onchange="changeExamineeClasses(this.value)" >
+					<option value="0" selected="selected">--请选择--</option>
+					
+				</select>
+				</td>
+				<td width="30%" class="fontColor linefontsize">学员姓名：&nbsp;
+				<select name='examineeName' class='select2' id='examineeName'>
+					<option value="0">--请选择--</option>
+				</select>
+				</td>
+			</tr>
+		   <tr>
+			  <td width="60%" height="43" colspan="6"><span class="fontColor">请在下面方框中输入新知识点内容:</span><span class="prompt">*</span></td>
+		   </tr>
+		   <tr>
+			  <td colspan="5"><textarea name='knowledgeInfo' cols='15' rows='2' class="content" onBlur="resetInfo()" id="knowledgeInfo"></textarea></td>
+			  <td height="43" align="center">&nbsp;&nbsp;&nbsp;&nbsp;<input name="btnView" type="button" class="inp_L1" id="btnView" onClick="addADailyTalkInfo()" onMouseOver="this.className='inp_L2'" onMouseOut="this.className='inp_L1'" value="添加"></td>
+		  </tr>
+	  </table>
+	  <div id="tableheadinfo" style="margin:0px;padding:0px;" >
+	  <table width="680" border="0px" cell padding="1" bordercolor="#FFFFFF" cellspacing="1" >
+		<tr>
+			  <td height="43" colspan="3"><span class="fontColor">本班还未讲解的新技术安排如下:</span></td>
+			  <td><input name="historyInfobtn" type="button" class="inp_L1" id="historyInfobtn" onClick="showHistoryInfoInfo()" onMouseOver="this.className='inp_L2'" onMouseOut="this.className='inp_L1'" value="历史记录" disabled="true"></td>
+		</tr>
+		<tr>
+			<th bordercolor="#7EA6DC" width="10%">编号</th>
+			<th bordercolor="#7EA6DC" width="15%">讲解学生</th>
+			<th bordercolor="#7EA6DC" width="60%">讲解内容</th>
+			<th bordercolor="#7EA6DC">操作</th>
+		</tr>
+	</table>
+	</div>
+	
+	<div  style="margin:0px;padding:0px;">
+	<table id="showKnowledgeInfoDiv" width="680" border="0px" cellpadding="1" bordercolor="#FFFFFF" cellspacing="1" >
+		<tr><td height="60" colspan="4"><span class="fontColor">请选择班级</span></td></tr> 
+	</table>
+	</div>
+	
+	
+ </form>
+</div>

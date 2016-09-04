@@ -1,0 +1,86 @@
+
+<link rel="stylesheet" href="../../css/szindex.css" type="text/css"></link>
+<script src="http://lib.sinaapp.com/js/jquery/1.9.1/jquery-1.9.1.js"></script>
+<script type="text/javascript">
+!window.jQuery && document.write('<script src=../../js/jquery-1.9.1.js><\/script>');
+</script>
+<script type="text/javascript" src="../../js/listexamine.js"></script>
+
+</head>
+<body>
+	<form name="frmListExaminee"  >
+		<table width="600" border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<td valign="middle" height="65" align="center"><img
+					src="images/t04.gif" width="595"
+					height="33" alt="考生列表">
+				</td>
+			</tr>
+			<tr>
+				<td align="center">
+					<table width="600" border="0" cellspacing="0" cellpadding="0">
+						<tr>
+							<td>
+								<table width="100%" border="0" cellpadding="0" cellspacing="0">
+								<tr>
+									<td width="10%">方向名：&nbsp;</td>
+					                <td width="18%">
+					                    <select id="directionName" onchange="changeDirection()">
+					                        <option value='0' selected></option>
+					                    </select>
+					                </td>
+					                <td width="10%">版本名：</td>
+					                <td width="12%">
+					                    <select id="editionName" onchange="changeSubject()"></select>
+					                </td>
+					                <td width="12%" >班级编号：</td>
+					                <td width="12%">
+					                <select name='className' class='select2' id='className' onchange="changeExamineeClasses(this.value)">
+					                    <option value="0" selected="selected">--请选择--</option>
+					                </select>
+					                </td>
+					                <td width="10%" >&nbsp;</td>
+									<td><input name="search" id="search" type="button"
+                                            class="inp_L1" value="查 询" onclick="serchExaminee()"
+                                            onMouseOver="this.className='inp_L2'"
+                                            onMouseOut="this.className='inp_L1'" />
+                                    </td>
+								
+									</tr>
+								</table>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<table width="100%" border="0" cellspacing="0" cellpadding="0">
+									<tr>
+										<td height="15" class="style3" id="edit_text"></td>
+									</tr>
+									<tr>
+										<td height="15">
+											<table width="100%" id="listexaminee" border="1" align="center" cellpadding="1"
+												style="display: none" bordercolor="#FFFFFF" cellspacing="0">
+												<thead>
+												<tr>
+													<th bordercolor="#7EA6DC">编号</th>
+													<th bordercolor="#7EA6DC">班级名称</th>
+													<th bordercolor="#7EA6DC">考生姓名</th>
+													<th bordercolor="#7EA6DC">操作考生</th>
+												</tr>
+												</thead>
+												<tbody id="examineerows">
+												
+												 </tbody>
+											</table>
+									</td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+		</table>
+	</form>
+</body>
+</html>

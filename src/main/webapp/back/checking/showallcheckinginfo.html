@@ -1,0 +1,77 @@
+<link rel="stylesheet" href="../../css/szindex.css" type="text/css"></link>
+
+<script type="text/javascript" src="../../js/dateChoose.js"></script>
+<script src="http://lib.sinaapp.com/js/jquery/1.9.1/jquery-1.9.1.js"></script>
+<!-- <script type="text/javascript">
+!window.jQuery && document.write('<script src=../../js/jquery-1.9.1.js><\/script>');
+</script> -->
+<script type="text/javascript" src="../../js/checking.js"></script>
+		<div align="center" id="bigbox">
+			<table width="1000px" border="0px" cellpadding="0" cellspacing="0">
+				<tr align="center">
+					<td height="65" colspan="6"><span class="fontColor linefontsize">源辰信息学员考勤记录浏览</span>
+					</td>
+				</tr>
+				<tr height="43">
+					<td width="6%">方向名：&nbsp;</td>
+	                <td width="10%">
+	                    <select id="directionName" onchange="changeDirection()">
+	                        <option value='0' selected></option>
+	                    </select>
+	                </td>
+	                <td width="6%">版本名：</td>
+	                <td width="10%">
+	                    <select id="editionName" onchange="changeSubject()"></select>
+	                </td>
+	                <td width="6%" >学期名：</td>
+	                <td width="6%">
+	                    <select id="semester" onchange="changeSemester()"></select>
+	                </td>
+	                <td width="6%" >考勤班级：</td>
+	                <td width="10%"><select
+						name='examineeClass' class='select2' id='examineeClass' >
+							<option value="0" selected="selected">--请选择--</option>
+					</select>
+					</td>
+					<td>&nbsp;</td>
+				</tr>
+				<tr height="43">
+					<td class="fontColor linefontsize" >考勤日期：</td>
+					<td align="left" class="fontColor linefontsize" colspan="5"><input
+						type="text" id="startDate" name="startDate" readonly="readonly"
+						onclick="fPopCalendar(event,this,this)" onfocus="this.select()" />&nbsp;
+						到 &nbsp;<input type="text" id="endDate" name="endDate" readonly="readonly"
+						onclick="fPopCalendar(event,this,this)" onfocus="this.select()" />&nbsp;&nbsp;&nbsp;&nbsp;
+						<select name="dateTime" id="dateTime" class='select2'>
+							<option value="0" selected="selected">--请选择--</option>
+							<option value="上午">上午</option>
+							<option value="下午">下午</option>
+							<option value="晚上">晚上</option>
+					</select>
+					</td>
+					<td class="fontColor linefontsize" colspan="2"><input name="btnView"
+						type="button" onClick="showAllCheckingInfo()" class="inp_L1"
+						id="btnView" onMouseOver="this.className='inp_L2'"
+						onMouseOut="this.className='inp_L1'" value="查询" />
+					</td>
+				</tr>
+			</table>
+			<br />
+			<hr size="2" style="color:blue" />
+			<br />
+
+			<table width="800px" border="0px" cellpadding="1" cellspacing="1">
+				<tr align="center" height="30">
+					<th bordercolor="#7EA6DC" width="15%">编号</th>
+					<th bordercolor="#7EA6DC" width="15%">班级</th>
+					<th bordercolor="#7EA6DC" width="15%">教员</th>
+					<th bordercolor="#7EA6DC" width="25%">日期</th>
+					<th bordercolor="#7EA6DC" width="15%">时间段</th>
+					<th bordercolor="#7EA6DC" width="15%">操作</th>
+				</tr>
+			</table>
+
+			<div id="findCheckingResultInfo" style="width:800px"></div>
+		</div>
+		<br/> <br/> <br/> <br/>
+

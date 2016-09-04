@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>主界面</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link id="easyuiTheme" rel="stylesheet" type="text/css"
+	href="../jslib/themes/default/easyui.css">
+<link rel="stylesheet" href="../css/extreme.css" type="text/css"></link>
+<link rel="stylesheet" type="text/css" href="../jslib/themes/icon.css">
+<script type="text/javascript" src="../jslib/jquery.min.js"></script>
+<script type="text/javascript" src="../jslib/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="../jslib/jeasyui.common.js"></script>
+<link rel="stylesheet" href="../css/szindex.css" type="text/css"></link>
+<script type="text/javascript" src="../js/createoption.js"></script>
+<script type="text/javascript" src="../js/ajax.js"></script>
+<script type="text/javascript" src="../jslib/locale/easyui-lang-zh_CN.js"></script>
+	
+<link href="../css/szindex.css" type=text/css rel=stylesheet>
+<script type="text/javascript" language="javascript" src="../js/creatXML.js"></script>
+<script type="text/javascript" language="javascript" src="../js/sendrequest.js"></script>
+<script type="text/javascript" src="../js/check.js"></script>
+
+
+<script type="text/javascript">
+	$(function() {
+		$.getJSON("/Examination2.0/login_isLogin.action",function(data){
+			$.each(data,function(i,item){
+				var flag=item[0].flag;
+				var uname=item[0].username;
+				if(flag=="true"){
+					var unameStr="";
+					unameStr+='教员：[<strong>'+uname+'</strong>]，欢迎您进入源辰在线考试系统！';
+					$("#sessionInfoDiv").html(unameStr);
+				}else{
+					alert("请先登录！！！");
+					location.href = "/Examination2.0/";
+				}
+			});
+		});
+		
+		
+		$("#back_mainTab").tabs('add', {
+			title : '主界面',
+			closable : true,
+			href : '/Examination2.0/back/welcome/welcome.html'
+		});
+		
+		$.getJSON("/Examination2.0/login_showUserInfo.action", function(data){
+			//alert(data);
+			$.each(data,function(i,item){
+				//var systemUser= eval("("+data+")");
+				var systemUser=item[0];
+				var a='';
+				if(systemUser.uRole=='1'){
+					document.getElementById("_easyui_tree_36").style.display="none";
+					document.getElementById("_easyui_tree_37").style.display="none";
+					document.getElementById("_easyui_tree_38").style.display="none";
+					document.getElementById("_easyui_tree_39").style.display="";
+					document.getElementById("_easyui_tree_40").style.display="";
+				}else if(systemUser.uRole=='2'){
+					document.getElementById("_easyui_tree_36").style.display="";
+					document.getElementById("_easyui_tree_37").style.display="";
+					document.getElementById("_easyui_tree_38").style.display="";
+					document.getElementById("_easyui_tree_39").style.display="none";
+					document.getElementById("_easyui_tree_40").style.display="none";
+				} 	
+			  	if (window.localStorage) {
+		 	   	 	localStorage.setItem("systemUser_userName", systemUser.userName);
+		 	   	 	localStorage.setItem("systemUser_uRole", systemUser.uRole);
+		 	   	 	localStorage.setItem("systemUser_uId", systemUser.uId);
+		 	   	 	localStorage.setItem("systemUser_remark", systemUser.remark);
+				} else {
+					Cookie.write("systemUser_userName", systemUser.userName);	
+					Cookie.write("systemUser_uRole", systemUser.uRole);	
+					Cookie.write("systemUser_uId", systemUser.uId);	
+					Cookie.write("systemUser_remark", systemUser.remark);
+			 	}
+			 });
+		});
+		
+	});
+
+	//格式化日期
+	$.fn.datebox.defaults.formatter = function(date) {
+			var y = date.getFullYear();
+			var m = date.getMonth() + 1;
+			var d = date.getDate();
+			return y + '-' + (m < 10 ? '0' + m : m) + '-' + (d < 10 ? '0' + d : d);
+	}
+	
+	$.extend($.fn.layout.methods, {
+		full : function (jq) {
+			return jq.each(function () {
+				var layout = $(this);
+				var center = layout.layout('panel', 'center');
+				center.panel('maximize');
+				center.parent().css('z-index', 10);
+
+				$(window).on('resize.full', function () {
+					layout.layout('unFull').layout('resize');
+				});
+			});
+		},
+		unFull : function (jq) {
+			return jq.each(function () {
+				var center = $(this).layout('panel', 'center');
+				center.parent().css('z-index', 'inherit');
+				center.panel('restore');
+				$(window).off('resize.full');
+			});
+		}
+	});
+	
+	
+	//全屏显示中间部分
+	function full() {
+		$("body").layout("full");
+		
+	}
+	function unFull() {
+		$("body").layout("unFull");
+
+	}
+	
+	 
+
+	
+		
+	function addTab(title,iconCls,closable,href,content) {
+		var tab = $("#back_mainTab");
+		if(href==null  ||  href==""){
+			//判断这个obj中的title是否已经在tab中存在
+			if (tab.tabs('exists', title)) {
+				tab.tabs('select', title);
+			} else {
+				tab.tabs('add', {
+					title : title,
+					iconCls : iconCls,
+					closable : closable,
+					content:content,
+				});
+			}
+		}else if(content==null  ||  content==""){
+			if (tab.tabs('exists', title)) {
+				tab.tabs('select', title);
+			} else {
+				tab.tabs('add', {
+					title : title,
+					iconCls : iconCls,
+					closable : closable,
+					href:href
+				});
+			}
+		}
+	}
+</script>
+</head>
+<body class="easyui-layout">
+	<!-- 头部 -->
+	<div data-options="region:'north',border:false" style="height:83px;">
+		<img style="padding-left: 20px;" height="80px" width="337px"
+			class="mainpage_head_img" alt="公司logo"
+			src="/Examination2.0/images/logo.png" />
+
+		<div id="sessionInfoDiv"
+			style="position: absolute;right: 5px;top:25px;">
+			<!-- 登录界面 -->
+		</div>
+		<div style="position: absolute; right: 0px; bottom: 5px; ">
+			<a href="javascript:void(0);" class="easyui-menubutton"
+				data-options="menu:'#layout_north_pfMenu',iconCls:'icon-ok'">更换皮肤</a>
+			<a href="javascript:void(0);" class="easyui-menubutton"
+				data-options="menu:'#layout_north_kzmbMenu',iconCls:'icon-help'">信息中心</a>
+			<a href="javascript:void(0);" class="easyui-menubutton"
+				data-options="menu:'#layout_north_zxMenu',iconCls:'icon-back'">注销</a>
+		</div>
+		<div id="layout_north_pfMenu" style="width: 120px; display: none;">
+			<div onclick="changeTheme('default');">默认皮肤</div>
+			<div onclick="changeTheme('gray');">灰色惬意</div>
+			<div onclick="changeTheme('metro-green');">现代绿色</div>
+			<div onclick="changeTheme('metro-orange');">现代橙色</div>
+			<div onclick="changeTheme('metro-red');">深红沐浴</div>
+		</div>
+		<div id="layout_north_kzmbMenu" style="width: 100px; display: none;">
+			<div onclick="userInfoFun();" style="display: none;">修改密码</div>
+			<div class="menu-sep"></div>
+			<div onclick="aboutUs();">联系我们</div>
+		</div>
+		<div id="personalInfo" class="easyui-dialog" title="修改密码" data-options="modal:true,closed:true,buttons:[{
+				text:'确认',
+				handler:function(){
+					//确认修改密码
+					var updateUname=$('#updateUname').val();
+					var oldPassword=$('#oldPassword').val();
+					var newPassword=$('#newPassword').val();
+					var newPasswordAgain=$('#newPasswordAgain').val();
+					if(newPassword==newPasswordAgain){
+						$.getJSON('/Examination2.0/login_updateTeacherPassWord.action', {examineeName:updateUname,oldPwd:oldPassword,newPwd:newPassword}, function(data) {
+							if(data==0){
+								//data为0，表示修改密码不成功，原密码不正确
+								//清空密码框
+								$('#oldPassword').val('');
+								$('#newPassword').val('');
+								$('#newPasswordAgain').val('');
+								alert('修改密码不成功，原密码不正确');
+								return;
+							}else if(data==1){
+								//data为1，表示修改密码成功
+								//清空密码框
+								$('#oldPassword').val('');
+								$('#newPassword').val('');
+								$('#newPasswordAgain').val('');
+								alert('修改密码成功');
+								$('#personalInfo').window('close');
+							}else if(data==2){
+								//data为2，表示修改密码失败
+								//清空密码框
+								$('#oldPassword').val('');
+								$('#newPassword').val('');
+								$('#newPasswordAgain').val('');
+								alert('修改密码失败');
+								$('#personalInfo').window('close');
+							}
+						});
+					}else{
+						alert('两次输入密码不一致，请重新输入');
+						//清空密码框
+						$('#newPassword').val('');
+						$('#newPasswordAgain').val('');
+						return;
+					}
+				}
+			},{
+				text:'取消',
+				handler:function(){
+					//取消修改密码
+					//实现方法就是清空所有的文本框
+					$('#oldPassword').val('');
+					$('#newPassword').val('');
+					$('#newPasswordAgain').val('');
+				}
+			}]" 
+		style="width:400px;height:260px;padding:20px;">
+			<table cellpadding="5" align="center" >
+				<tr>
+					<td>用户名:</td>
+					<td><input class="easyui-validatebox textbox" type="text"
+						id="updateUname" style="background:#F5F5F5;" disabled="disabled"></input>
+					</td>
+				</tr>
+				<tr>
+					<td>原密码:</td>
+					<td><input class="easyui-validatebox textbox" type="password"
+						id="oldPassword" data-options="required:true"></input>
+					</td>
+				</tr>
+				<tr>
+					<td>新密码:</td>
+					<td><input class="easyui-validatebox textbox" type="password"
+						id="newPassword" data-options="required:true"></input>
+					</td>
+				</tr>
+				<tr>
+					<td>确认新密码:</td>
+					<td><input class="easyui-validatebox textbox" type="password"
+						id="newPasswordAgain" data-options="required:true"></input>
+					</td>
+				</tr>
+			</table>
+		</div>
+		<div id="aboutUsInfo" class="easyui-dialog" title="联系我们" style="width:800px;height:370px;"
+        	data-options="modal:true,closed:true">
+    		<p style="line-height: 30px; margin-top:30px; font-size: 24px; font-family: 华文行楷; text-align: center;">开发人员联系表</p>
+    		<table border=0px; cellpadding=0px; align="center">
+    			<tr>
+    				<td height="160px"><img src="../images/aboutUs/Tane.jpg" width="150px" height="160px" title="谭振" /></td>
+    				<td><img src="../images/aboutUs/fpc.jpg" width="150px" height="160px" title="付鹏程" /></td>
+    				<td><img src="../images/aboutUs/fanhao.jpg" width="150px" height="160px" title="范浩" /></td>
+    				<td><img src="../images/aboutUs/sunfei.jpg" width="150px" height="160px" title="孙飞" /></td>
+    				<td><img src="../images/aboutUs/renzewen.jpg" width="150px" height="160px" title="任泽文" /></td>
+    			</tr>
+    			<tr>
+    				<td height="30px" align="center" style="line-height: 30px;">组长：谭振</td>
+    				<td height="30px" align="center" style="line-height: 30px;">组员：付鹏程</td>
+    				<td height="30px" align="center" style="line-height: 30px;">组员：范浩浩</td>
+    				<td height="30px" align="center" style="line-height: 30px;">组员：孙飞</td>
+    				<td height="30px" align="center" style="line-height: 30px;">组员：任泽文</td>
+    			</tr>
+    			<tr>
+    				<td align="center">QQ:632497078</td>
+    				<td align="center">QQ:377513462</td>
+    				<td align="center">QQ:1453028282</td>
+    				<td align="center">QQ:714278754</td>
+    				<td align="center">QQ:544145729</td>
+    			</tr>
+    		</table>
+		</div>
+		<div id="layout_north_zxMenu" style="width: 100px; display: none;">
+			<div onclick="ReLogin();">重新登录</div>
+			<div class="menu-sep"></div>
+			<div onclick="logoutFun();">退出系统</div>
+		</div>
+		<div id="reLoginInfo" class="easyui-dialog" title="提示" style="width:400px;height:200px;"
+        	data-options="modal:true,closed:true,closable:false,
+			buttons:[{
+				text:'确定',
+				handler:function(){
+					//确定退出
+					location.href='/Examination2.0/login.html';
+				}
+			},{
+				text:'取消',
+				handler:function(){
+					//取消退出
+					$('#reLoginInfo').window('close');
+				}
+			}]">
+    		<p style="line-height: 70px; color: red; font-size: 24px; font-family: 华文行楷; text-align: center;">您确定要重新登录吗？</p>
+		</div>
+		<div id="logoutInfo" class="easyui-dialog" title="提示" style="width:400px;height:200px;"
+        	data-options="modal:true,closed:true,closable:false,
+			buttons:[{
+				text:'确定',
+				handler:function(){
+					//确定退出
+					$.getJSON('/Examination2.0/login_exit.action', function(data) {
+						if (data==1) {
+							location.replace('../login.html');
+						} else {
+							$('#sessionInfoDiv').html('');
+						}
+					});
+				}
+			},{
+				text:'取消',
+				handler:function(){
+					//取消退出
+					$('#logoutInfo').window('close');
+				}
+			}]">
+    		<p style="line-height: 70px; color: red; font-size: 24px; font-family: 华文行楷; text-align: center;">您确定要退出系统吗？</p>
+		</div>
+	</div>
+
+	<!-- 西边 -->
+	<div data-options="region:'west',split:true,title:'导航菜单'"
+		style="width:150px;">
+		<div id="aa" class="easyui-accordion"
+			data-options="fit:true,border:false">
+			<div title="学员信息"
+				data-options="iconCls:'icon-mini-add',selected:true"
+				style="padding:10px;">
+				<ul id="tt" class="easyui-tree">
+					<li><span>考勤管理</span>
+						<ul>
+							<li><a href="#"
+								onclick="javascript:addTab('学员考勤','icon-mini-add',true,'','<iframe src=checking/checking.html  frameborder=0 style=border:0;width:100%;height:99.5%;></iframe>')">学员考勤</a>
+							</li>
+							<li><a href="#"
+								onclick="javascript:addTab('考勤记录','icon-mini-add',true,'','<iframe src=checking/showallcheckinginfo.html  frameborder=0 style=border:0;width:100%;height:99.5%;></iframe>')">考勤记录</a>
+							</li>
+							<li><a href="#"
+								onclick="javascript:addTab('考勤统计','icon-mini-add',true,'','<iframe src=checking/findcheckinginfo.html  frameborder=0 style=border:0;width:100%;height:100%;></iframe>')">考勤统计</a>
+							</li>
+						</ul>
+					</li>
+
+					<li><span>每日一讲</span>
+						<ul>
+							<li><a href="#"
+								onclick="javascript:addTab('每日一讲','icon-mini-add',true,'','<iframe src=checking/adailytalk.html  frameborder=0 style=border:0;width:100%;height:99.5%;></iframe>')">每日一讲</a>
+							</li>
+
+						</ul>
+					</li>
+
+					<li><span>班级管理</span>
+						<ul>
+							<li><a href="#"
+								onclick="javascript:addTab('新增班级','icon-mini-add',true,'','<iframe src=student/newclass.html  frameborder=0 style=border:0;width:100%;height:99.5%;></iframe>')">新增班级</a>
+							</li>
+							<li><a href="#"
+								onclick="javascript:addTab('班级列表','icon-mini-add',true,'','<iframe src=student/listclass.html  frameborder=0 style=border:0;width:100%;height:99.5%;></iframe>')">班级列表</a>
+							</li>
+						</ul>
+					</li>
+
+					<li><span>考生管理</span>
+						<ul>
+							<li><a href="#"
+								onclick="javascript:addTab('考生密码','icon-mini-add',true,'','<iframe src=student/updatepassword.html  frameborder=0 style=border:0;width:100%;height:99.5%;></iframe>')">考生密码</a>
+							</li>
+							<li><a href="#"
+								onclick="javascript:addTab('录入考生','icon-mini-add',true,'','<iframe src=student/newexaminee.html  frameborder=0 style=border:0;width:100%;height:99.5%;></iframe>')">录入考生</a>
+							</li>
+							<li><a href="#"
+								onclick="javascript:addTab('考生列表','icon-mini-add',true,'','<iframe src=student/listexaminee.html  frameborder=0 style=border:0;width:100%;height:99.5%;></iframe>')">考生列表</a>
+							</li>
+						</ul>
+					</li>
+					<li><span>导入excel班级文件</span>
+						<ul>
+							<li><a href="#"
+								onclick="javascript:addTab('导入excel班级文件','icon-mini-add',true,'','<iframe src=student/javaexl.html  frameborder=0 style=border:0;width:100%;height:99.5%;></iframe>')">导入excel班级文件</a>
+							</li>
+						</ul>
+					</li>
+					
+					<li><span>教学评测</span>
+                        <ul>
+                            <li><a href="#"
+                                onclick="javascript:addTab('发布评测','icon-mini-add',true,'','<iframe src=student/newclass.html  frameborder=0 style=border:0;width:100%;height:99.5%;></iframe>')">发布评测</a>
+                            </li>
+                            <li><a href="#"
+                                onclick="javascript:addTab('评测结果','icon-mini-add',true,'','<iframe src=student/listclass.html  frameborder=0 style=border:0;width:100%;height:99.5%;></iframe>')">评测结果</a>
+                            </li>
+                        </ul>
+                    </li>
+				</ul>
+			</div>
+			<div title="题库维护"
+				data-options="iconCls:'icon-mini-add',selected:false"
+				style="overflow:auto;padding:10px;">
+				<ul id="tt" class="easyui-tree">
+					<li><span>题库维护</span>
+						<ul>
+							<li><a href="#"
+								onclick="javascript:addTab('考试安排','icon-mini-add',true,'','<iframe src=backoperation/examarrange.html  frameborder=0 style=border:0;width:100%;height:99.5%;></iframe>')">考试安排</a>
+							</li>
+							<li><a href="#"
+								onclick="javascript:addTab('出笔试卷','icon-mini-add',true,'','<iframe src=backoperation/newwritingpaper.html  frameborder=0 style=border:0;width:100%;height:99.5%;></iframe>')">出笔试卷</a>
+							</li>
+
+							<li><a href="#"
+								onclick="javascript:addTab('浏览笔试卷','icon-mini-add',true,'','<iframe src=grade/listwritingpaper.html  frameborder=0 style=border:0;width:100%;height:99.5%;></iframe>')">浏览笔试卷</a>
+							</li>
+						</ul></li>
+					<li><span>试题库管理</span>
+						<ul>
+							<li><a href="#"
+								onclick="javascript:addTab('录入笔试题','icon-mini-add',true,'','<iframe src=backoperation/newwritingquestion.html  frameborder=0 style=border:0;width:100%;height:99.5%;></iframe>')">录入笔试题</a>
+							</li>
+							<li><a href="#"
+								onclick="javascript:addTab('浏览笔试题','icon-mini-add',true,'','<iframe src=backoperation/listwritquestion.html  frameborder=0 style=border:0;width:100%;height:99.5%;></iframe>')">浏览笔试题</a>
+							</li>
+						</ul></li>
+					<li><span>测评卷管理</span>
+						<ul>
+							<li><a href="#"
+								onclick="javascript:addTab('知识点管理','icon-mini-add',true,'','<iframe src=admin/addpoint.html  frameborder=0 style=border:0;width:100%;height:99.5%;></iframe>')">知识点管理</a>
+							</li>
+							<li><a href="#"
+								onclick="javascript:addTab('出自评卷','icon-mini-add',true,'','<iframe src=admin/newpointpaper.html  frameborder=0 style=border:0;width:100%;height:99.5%;></iframe>')">出自评卷</a>
+							</li>
+							<li><a href="#"
+								onclick="javascript:addTab('浏览自评卷','icon-mini-add',true,'','<iframe src=admin/showpointpaper.html  frameborder=0 style=border:0;width:100%;height:99.5%;></iframe>')">浏览自评卷</a>
+							</li>
+						</ul></li>
+				</ul>
+			</div>
+			<div title="成绩管理"
+				data-options="iconCls:'icon-mini-add',selected:false"
+				style="padding:10px;">
+				<ul id="tt" class="easyui-tree">
+					<li><span>试卷查询</span>
+						<ul>
+							<li><a href="#"
+								onclick="javascript:addTab('笔试卷查询','icon-mini-add',true,'','<iframe src=grade/listwritingpaper.html  frameborder=0 style=border:0;width:100%;height:99.5%;></iframe>')">笔试卷查询</a>
+							</li>
+						</ul>
+					</li>
+					<li><span>成绩查询</span>
+						<ul>
+							<li><a href="#"
+								onclick="javascript:addTab('班级成绩查询','icon-mini-add',true,'','<iframe src=grade/searchclassscore.html  frameborder=0 style=border:0;width:100%;height:99.5%;></iframe>')">班级成绩查询</a>
+							</li>
+							<li><a href="#"
+								onclick="javascript:addTab('考生成绩查询','icon-mini-add',true,'','<iframe src=grade/searchexaminee.html  frameborder=0 style=border:0;width:100%;height:99.5%;></iframe>')">考生成绩查询</a>
+							</li>
+							<li><a href="#"
+								onclick="javascript:addTab('测评成绩查询','icon-mini-add',true,'','<iframe src=grade/showstudentanswer.html  frameborder=0 style=border:0;width:100%;height:99.5%;></iframe>')">测评成绩查询</a>
+							</li>
+						</ul>
+					</li>
+					<li><span>知识点管理</span>
+						<ul>
+							<li><a href="#"
+								onclick="javascript:addTab('知识点统计','icon-mini-add',true,'','<iframe src=grade/pointtotal.html  frameborder=0 style=border:0;width:100%;height:99.5%;></iframe>')">知识点统计</a>
+							</li>
+						</ul>
+					</li>
+					<li><span>测评管理</span>
+						<ul>
+							<li><a href="#"
+								onclick="javascript:addTab('课程测评统计','icon-mini-add',true,'','<iframe src=grade/showsubjecttotal.html  frameborder=0 style=border:0;width:100%;height:99.5%;></iframe>')">课程测评统计</a>
+							</li>
+							<li><a href="#"
+								onclick="javascript:addTab('查看测评留言','icon-mini-add',true,'','<iframe src=grade/showmessageinfo.html  frameborder=0 style=border:0;width:100%;height:99.5%;></iframe>')">查看测评留言</a>
+							</li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+			<div title="用户管理"
+				data-options="iconCls:'icon-mini-add',selected:false"
+				style="padding:10px;">
+				<ul id="tt" class="easyui-tree">
+					<li><a href="#"
+						onclick="javascript:addTab('添加新用户','icon-mini-add',true,'','<iframe src=userInfo/admin/newuser.html  frameborder=0 style=border:0;width:100%;height:100%;></iframe>')">添加新用户</a>
+					</li>
+					<li><a href="#"
+						onclick="javascript:addTab('修改用户信息','icon-mini-add',true,'','<iframe src=userInfo/admin/updateuser.html  frameborder=0 style=border:0;width:100%;height:100%;></iframe>')">修改用户信息</a>
+					</li>
+					<li><a href="#"
+						onclick="javascript:addTab('查询现有用户','icon-mini-add',true,'','<iframe src=userInfo/admin/listuser.html  frameborder=0 style=border:0;width:100%;height:100%;></iframe>')">查询现有用户</a>
+					</li>
+					<li><a href="#"
+						onclick="javascript:addTab('修改用户信息','icon-mini-add',true,'','<iframe src=userInfo/teacher/updateuser.html  frameborder=0 style=border:0;width:100%;height:100%;></iframe>')">修改用户信息</a>
+					</li>
+					<li><a href="#"
+						onclick="javascript:addTab('查询现有用户','icon-mini-add',true,'','<iframe src=userInfo/teacher/listuser.html  frameborder=0 style=border:0;width:100%;height:100%;></iframe>')">查询现有用户</a>
+					</li>
+				</ul>
+			</div>
+			<div title="版本控制"
+				data-options="iconCls:'icon-mini-add',selected:false"
+				style="padding:10px;">
+				<ul id="tt" class="easyui-tree">
+                    <li><a href="#"
+                        onclick="javascript:addTab('方向维护','icon-mini-add',true,'','<iframe src=edition/direction.html  frameborder=0 style=border:0;width:100%;height:99.5%;></iframe>')">方向维护</a>
+                    </li>
+					<li><a href="#"
+						onclick="javascript:addTab('版本维护','icon-mini-add',true,'','<iframe src=edition/edition.html  frameborder=0 style=border:0;width:100%;height:99.5%;></iframe>')">版本维护</a>
+					</li>
+					<li><a href="#"
+						onclick="javascript:addTab('课程维护','icon-mini-add',true,'','<iframe src=edition/subject.html  frameborder=0 style=border:0;width:100%;height:99.5%;></iframe>')">课程维护</a>
+					</li>
+					<li><a href="#"
+						onclick="javascript:addTab('章节维护','icon-mini-add',true,'edition/chapter.html','')">章节维护</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+
+	<!-- 东边 -->
+	<div data-options="region:'east',split:true,title:'工具箱'"
+		style="width:170px;padding:10px;">
+		<div class="easyui-calendar" style="width:150px;height:150px;"></div>
+	</div>
+	<!-- 南边 -->
+	<div data-options="region:'south',border:false"
+		style="height:30px;padding:10px;">
+		<center>衡阳源辰信息科技有限公司</center>
+	</div>
+	<!-- 中间 -->
+	<div id="cc" data-options="region:'center',title:'主操作区',
+			 tools: [{   
+        		iconCls:'icon-full',
+       			handler:function(){full()}   
+    		},{   
+        		iconCls:'icon-unfull',
+       			handler:function(){unFull()}   
+    		}]">
+		<div id="back_mainTab" class="easyui-tabs" data-options="fit:true">
+		</div>
+		
+	</div>
+</body>
+</html>

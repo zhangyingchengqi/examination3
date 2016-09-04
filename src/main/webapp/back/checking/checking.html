@@ -1,0 +1,82 @@
+	<link rel="stylesheet" href="../../css/szindex.css" type="text/css"></link>
+	 <link rel="stylesheet" href="../../css/checking.css" type="text/css"></link>
+    <script type="text/javascript" src="../../js/dateChoose.js"></script>
+    <script src="http://lib.sinaapp.com/js/jquery/1.9.1/jquery-1.9.1.js"></script>
+<script type="text/javascript">
+!window.jQuery && document.write('<script src=../../js/jquery-1.9.1.js><\/script>');
+</script>
+    <script type="text/javascript" src="../../js/checking.js"></script>
+	<style type="text/css">
+		div { 
+		white-space:nowrap; 
+	} 
+	</style>
+	
+	
+
+ 	<form name="myform">
+    <div  id="bigbox">
+		<table width="800" border="0" cellpadding="0" cellspacing="0">
+			<tr height="43">
+				<td width="6%">方向名：&nbsp;</td>
+                <td width="10%">
+                    <select id="directionName" onchange="changeDirection()">
+                    </select>
+                </td>
+                <!-- <td width="6%">版本名：</td>
+                <td width="10%">
+                    <select id="editionName" onchange="changeSubject()"></select>
+                </td>
+                <td width="6%" >学期名：</td>
+				<td width="6%">
+				    <select id="semester" onchange="changeSemester()"></select>
+				</td> -->
+				<td width="6%" >考勤班级：</td>
+				<td width="10%">
+				<select name='examineeClass' class='select2' id='examineeClass' onchange="changeClazz()">
+					<option value="0" selected="selected">--请选择--</option>
+				</select>
+				</td>
+                <td width="16%" id="systemUser_userName">考勤教员：</td>
+		      </tr>
+		      <tr height="43">
+            	<td>考勤日期：&nbsp;</td>
+            	<td>
+                    <input type="text" value="" id="checkDate" name="checkDate" onclick="fPopCalendar(event,this,this)" onblur="changeClasses()" readonly="readonly"/>&nbsp;
+            	</td>
+            	<td>考勤时间：&nbsp;</td>
+            	<td rowspan="3">	
+            		<select name="dateTime" id="dateTime" class='select2' onchange="changeClasses()">
+            				<option value="上午">上午&nbsp;</option>
+            				<option value="下午">下午&nbsp;</option>
+            				<option value="晚上">晚上&nbsp;</option>
+            		</select>
+            	</td>
+			</tr>
+		</table>
+		<hr style="border:1px dashed blue;"/>
+		<br/>
+		<table width="800" border="1" cellpadding="1" bordercolor="#FFFFFF" cellspacing="1" >
+			<tr height="25">
+				<th bordercolor="#7EA6DC" width="8%">编号</th>
+				<th bordercolor="#7EA6DC" width="12%">学员姓名</th>
+				<th bordercolor="#7EA6DC" width="50%">到勤状态</th>
+				<th bordercolor="#7EA6DC">备注</th>
+			</tr>
+		</table>
+		<div id="checkClassInfo">
+		<table width="800" border="1" cellpadding="1" bordercolor="#FFFFFF" cellspacing="1" >
+			<tr height="30"><td align="center" colspan="4"><span class="fontColor" style="color:red;font-weight:bold;font-size:20px;">请在上面选择要考勤的班级</span></td></tr>
+		</table>
+		</div>
+		<hr style="border:1px dashed blue;"/>
+		<div id="beizhu">
+			<div id="remarktitle"><p><label for="remarkInfo">教课备注：</label></p></div>
+			<div id="remarkinfo"><textarea cols="50" rows="3" id="remarkInfo"></textarea></div>
+			<div id="remarkcommit">
+				<br/>
+				<input name="btnView" type="button" onClick="CheckingResultInfo()" class="inp_L1" id="btnView" onMouseOver="this.className='inp_L2'" onMouseOut="this.className='inp_L1'" value="提交" disabled="disabled">
+			</div>
+			<br/>
+		</div>
+	</div>

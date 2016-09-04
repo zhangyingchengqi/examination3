@@ -1,0 +1,13 @@
+<ehcache>
+
+	<!-- 将数据缓存到哪里 diskStore：磁盘 java.io.tmpdir->jdk中io包指定的路径 -->
+	<diskStore path="java.io.tmpdir" />
+
+
+	<!-- 默认的缓存策略 maxElementsInMemory：在内存中最多缓存的对象 timeToIdleSeconds：空闲的时间 timeToLiveSeconds：生存的时间 
+		激活时间 overflowToDisk：如果内存保存不下了，是否保存到磁盘 -->
+	<defaultCache maxElementsInMemory="10000" eternal="false"
+		timeToIdleSeconds="120" timeToLiveSeconds="120" overflowToDisk="true" />
+
+
+</ehcache>

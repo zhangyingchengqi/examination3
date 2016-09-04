@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- WARNING: Eclipse auto-generated file.
+              Any modifications will be overwritten.
+              To include a user specific buildfile here, simply create one in the same
+              directory with the processing instruction <?eclipse.ant.import?>
+              as the first entry and export the buildfile again. --><project basedir="." default="build" name="Examination2.0">
+    <property environment="env"/>
+    <property name="ECLIPSE_HOME" value="../../装机软件/01_java/eclipse/"/>
+    <property name="junit.output.dir" value="junit"/>
+    <property name="debuglevel" value="source,lines,vars"/>
+    <property name="target" value="1.7"/>
+    <property name="source" value="1.7"/>
+    <path id="Maven Dependencies.libraryclasspath">
+        <pathelement location="../../MavenRepository/javax/servlet/jstl/1.2/jstl-1.2.jar"/>
+        <pathelement location="../../MavenRepository/javax/servlet/jsp/jsp-api/2.1/jsp-api-2.1.jar"/>
+        <pathelement location="../../MavenRepository/javax/servlet/servlet-api/2.5/servlet-api-2.5.jar"/>
+        <pathelement location="../../MavenRepository/junit/junit/4.10/junit-4.10.jar"/>
+        <pathelement location="../../MavenRepository/org/hamcrest/hamcrest-core/1.1/hamcrest-core-1.1.jar"/>
+        <pathelement location="../../MavenRepository/log4j/log4j/1.2.16/log4j-1.2.16.jar"/>
+        <pathelement location="../../MavenRepository/org/slf4j/slf4j-api/1.7.6/slf4j-api-1.7.6.jar"/>
+        <pathelement location="../../MavenRepository/org/slf4j/slf4j-log4j12/1.7.6/slf4j-log4j12-1.7.6.jar"/>
+        <pathelement location="../../MavenRepository/org/sonatype/sisu/inject/cglib/2.2.1/cglib-2.2.1.jar"/>
+        <pathelement location="../../MavenRepository/asm/asm/3.2/asm-3.2.jar"/>
+        <pathelement location="../../MavenRepository/org/springframework/spring-core/3.1.2.RELEASE/spring-core-3.1.2.RELEASE.jar"/>
+        <pathelement location="../../MavenRepository/org/springframework/spring-asm/3.1.2.RELEASE/spring-asm-3.1.2.RELEASE.jar"/>
+        <pathelement location="../../MavenRepository/commons-logging/commons-logging/1.1.1/commons-logging-1.1.1.jar"/>
+        <pathelement location="../../MavenRepository/org/springframework/spring-context/3.1.2.RELEASE/spring-context-3.1.2.RELEASE.jar"/>
+        <pathelement location="../../MavenRepository/org/springframework/spring-aop/3.1.2.RELEASE/spring-aop-3.1.2.RELEASE.jar"/>
+        <pathelement location="../../MavenRepository/org/springframework/spring-jdbc/3.1.2.RELEASE/spring-jdbc-3.1.2.RELEASE.jar"/>
+        <pathelement location="../../MavenRepository/org/springframework/spring-tx/3.1.2.RELEASE/spring-tx-3.1.2.RELEASE.jar"/>
+        <pathelement location="../../MavenRepository/org/springframework/spring-beans/3.1.2.RELEASE/spring-beans-3.1.2.RELEASE.jar"/>
+        <pathelement location="../../MavenRepository/org/springframework/spring-web/3.1.2.RELEASE/spring-web-3.1.2.RELEASE.jar"/>
+        <pathelement location="../../MavenRepository/aopalliance/aopalliance/1.0/aopalliance-1.0.jar"/>
+        <pathelement location="../../MavenRepository/org/springframework/spring-expression/3.1.2.RELEASE/spring-expression-3.1.2.RELEASE.jar"/>
+        <pathelement location="../../MavenRepository/org/springframework/spring-orm/3.1.2.RELEASE/spring-orm-3.1.2.RELEASE.jar"/>
+        <pathelement location="../../MavenRepository/org/aspectj/aspectjweaver/1.7.4/aspectjweaver-1.7.4.jar"/>
+        <pathelement location="../../MavenRepository/org/hibernate/hibernate-core/4.2.9.Final/hibernate-core-4.2.9.Final.jar"/>
+        <pathelement location="../../MavenRepository/antlr/antlr/2.7.7/antlr-2.7.7.jar"/>
+        <pathelement location="../../MavenRepository/org/jboss/logging/jboss-logging/3.1.0.GA/jboss-logging-3.1.0.GA.jar"/>
+        <pathelement location="../../MavenRepository/dom4j/dom4j/1.6.1/dom4j-1.6.1.jar"/>
+        <pathelement location="../../MavenRepository/org/javassist/javassist/3.18.1-GA/javassist-3.18.1-GA.jar"/>
+        <pathelement location="../../MavenRepository/org/jboss/spec/javax/transaction/jboss-transaction-api_1.1_spec/1.0.1.Final/jboss-transaction-api_1.1_spec-1.0.1.Final.jar"/>
+        <pathelement location="../../MavenRepository/org/hibernate/javax/persistence/hibernate-jpa-2.0-api/1.0.1.Final/hibernate-jpa-2.0-api-1.0.1.Final.jar"/>
+        <pathelement location="../../MavenRepository/org/hibernate/common/hibernate-commons-annotations/4.0.2.Final/hibernate-commons-annotations-4.0.2.Final.jar"/>
+        <pathelement location="../../MavenRepository/org/hibernate/hibernate-validator/5.1.0.Final/hibernate-validator-5.1.0.Final.jar"/>
+        <pathelement location="../../MavenRepository/javax/validation/validation-api/1.1.0.Final/validation-api-1.1.0.Final.jar"/>
+        <pathelement location="../../MavenRepository/com/fasterxml/classmate/1.0.0/classmate-1.0.0.jar"/>
+        <pathelement location="../../MavenRepository/org/hibernate/hibernate-ehcache/4.2.9.Final/hibernate-ehcache-4.2.9.Final.jar"/>
+        <pathelement location="../../MavenRepository/net/sf/ehcache/ehcache-core/2.4.3/ehcache-core-2.4.3.jar"/>
+        <pathelement location="../../MavenRepository/com/alibaba/druid/1.0.4/druid-1.0.4.jar"/>
+        <pathelement location="../../MavenRepository/mysql/mysql-connector-java/5.1.21/mysql-connector-java-5.1.21.jar"/>
+        <pathelement location="../../MavenRepository/org/apache/struts/struts2-core/2.3.16/struts2-core-2.3.16.jar"/>
+        <pathelement location="../../MavenRepository/org/apache/struts/xwork/xwork-core/2.3.16/xwork-core-2.3.16.jar"/>
+        <pathelement location="../../MavenRepository/asm/asm-commons/3.3/asm-commons-3.3.jar"/>
+        <pathelement location="../../MavenRepository/asm/asm-tree/3.3/asm-tree-3.3.jar"/>
+        <pathelement location="../../MavenRepository/org/freemarker/freemarker/2.3.19/freemarker-2.3.19.jar"/>
+        <pathelement location="../../MavenRepository/ognl/ognl/3.0.6/ognl-3.0.6.jar"/>
+        <pathelement location="../../MavenRepository/commons-fileupload/commons-fileupload/1.3/commons-fileupload-1.3.jar"/>
+        <pathelement location="../../MavenRepository/commons-io/commons-io/2.2/commons-io-2.2.jar"/>
+        <pathelement location="../../MavenRepository/org/apache/struts/struts2-spring-plugin/2.3.16/struts2-spring-plugin-2.3.16.jar"/>
+        <pathelement location="../../MavenRepository/org/apache/commons/commons-lang3/3.1/commons-lang3-3.1.jar"/>
+        <pathelement location="../../MavenRepository/org/apache/struts/struts2-convention-plugin/2.3.16/struts2-convention-plugin-2.3.16.jar"/>
+        <pathelement location="../../MavenRepository/org/newboy/newboy/1.0.0/newboy-1.0.0.jar"/>
+        <pathelement location="../../MavenRepository/com/alibaba/fastjson/1.1.39/fastjson-1.1.39.jar"/>
+    </path>
+    <path id="Examination2.0.classpath">
+        <pathelement location="target/classes"/>
+        <pathelement location="target/test-classes"/>
+        <path refid="Maven Dependencies.libraryclasspath"/>
+    </path>
+    <path id="run.MyTest.classpath">
+        <path refid="Examination2.0.classpath"/>
+        <path refid="Maven Dependencies.libraryclasspath"/>
+    </path>
+    <path id="run.MyTest.test1fpc.classpath">
+        <path refid="Examination2.0.classpath"/>
+        <path refid="Maven Dependencies.libraryclasspath"/>
+    </path>
+    <path id="run.MyTest.testWriting.classpath">
+        <path refid="Examination2.0.classpath"/>
+        <path refid="Maven Dependencies.libraryclasspath"/>
+    </path>
+    <target name="init">
+        <mkdir dir="target/classes"/>
+        <mkdir dir="target/test-classes"/>
+        <copy includeemptydirs="false" todir="target/classes">
+            <fileset dir="src/main/java">
+                <exclude name="**/*.java"/>
+            </fileset>
+        </copy>
+        <copy includeemptydirs="false" todir="target/classes">
+            <fileset dir="src/main/resources">
+                <exclude name="**/*.java"/>
+                <exclude name="**"/>
+            </fileset>
+        </copy>
+        <copy includeemptydirs="false" todir="target/test-classes">
+            <fileset dir="src/test/java">
+                <exclude name="**/*.java"/>
+            </fileset>
+        </copy>
+        <copy includeemptydirs="false" todir="target/test-classes">
+            <fileset dir="src/test/resources">
+                <exclude name="**/*.java"/>
+                <exclude name="**"/>
+            </fileset>
+        </copy>
+    </target>
+    <target name="clean">
+        <delete dir="target/classes"/>
+        <delete dir="target/test-classes"/>
+    </target>
+    <target depends="clean" name="cleanall"/>
+    <target depends="build-subprojects,build-project" name="build"/>
+    <target name="build-subprojects"/>
+    <target depends="init" name="build-project">
+        <echo message="${ant.project.name}: ${ant.file}"/>
+        <javac debug="true" debuglevel="${debuglevel}" destdir="target/classes" includeantruntime="false" source="${source}" target="${target}">
+            <src path="src/main/java"/>
+            <src path="src/main/resources"/>
+            <exclude name="**"/>
+            <classpath refid="Examination2.0.classpath"/>
+        </javac>
+        <javac debug="true" debuglevel="${debuglevel}" destdir="target/test-classes" includeantruntime="false" source="${source}" target="${target}">
+            <src path="src/test/java"/>
+            <src path="src/test/resources"/>
+            <exclude name="**"/>
+            <classpath refid="Examination2.0.classpath"/>
+        </javac>
+    </target>
+    <target description="Build all projects which reference this project. Useful to propagate changes." name="build-refprojects"/>
+    <target description="copy Eclipse compiler jars to ant lib directory" name="init-eclipse-compiler">
+        <copy todir="${ant.library.dir}">
+            <fileset dir="${ECLIPSE_HOME}/plugins" includes="org.eclipse.jdt.core_*.jar"/>
+        </copy>
+        <unzip dest="${ant.library.dir}">
+            <patternset includes="jdtCompilerAdapter.jar"/>
+            <fileset dir="${ECLIPSE_HOME}/plugins" includes="org.eclipse.jdt.core_*.jar"/>
+        </unzip>
+    </target>
+    <target description="compile project with Eclipse compiler" name="build-eclipse-compiler">
+        <property name="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter"/>
+        <antcall target="build"/>
+    </target>
+    <target name="MyTest">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="com.yc.test.MyTest" todir="${junit.output.dir}"/>
+            <classpath refid="run.MyTest.classpath"/>
+        </junit>
+    </target>
+    <target name="MyTest.test1fpc">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="com.yc.test.MyTest" todir="${junit.output.dir}"/>
+            <classpath refid="run.MyTest.test1fpc.classpath"/>
+        </junit>
+    </target>
+    <target name="MyTest.testWriting">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="com.yc.test.MyTest" todir="${junit.output.dir}"/>
+            <classpath refid="run.MyTest.testWriting.classpath"/>
+        </junit>
+    </target>
+    <target name="junitreport">
+        <junitreport todir="${junit.output.dir}">
+            <fileset dir="${junit.output.dir}">
+                <include name="TEST-*.xml"/>
+            </fileset>
+            <report format="frames" todir="${junit.output.dir}"/>
+        </junitreport>
+    </target>
+</project>

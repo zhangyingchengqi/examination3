@@ -1,0 +1,64 @@
+<link rel="stylesheet" href="../../css/szindex.css" type="text/css"></link>
+<script src="http://lib.sinaapp.com/js/jquery/1.9.1/jquery-1.9.1.js"></script>
+<script type="text/javascript">
+!window.jQuery && document.write('<script src=../../js/jquery-1.9.1.js><\/script>');
+</script>
+<script type="text/javascript" src="../../js/direction_New.js"></script>
+
+		<form>
+			<table width="750" border="0" cellpadding="0" cellspacing="0">
+				<tr>
+					<td height="60" align="center">
+						&nbsp;
+					</td>
+				</tr>
+				<tr>
+					<td align="center">
+					<br />
+						<table width="550" border="0px" cellspacing="2" cellpadding="2">
+							<thead>
+							<tr>
+								<th align="center">
+									编号
+								</th>
+								<th align="center">
+									方向名称
+								</th>
+								<th align="center">
+                                    班级命名规则
+                                </th>
+                                <th align="center">
+                                                                                                            备注
+                                </th>
+								<th align="center">
+									默认
+								</th>
+								<th align="center" bgcolor="#CCCCCC">
+									修改	</th>
+								<th align="center">
+									删除
+								</th>
+							</tr>
+							</thead>
+							<tbody  id="showDriection">
+								
+							</tbody>
+					  </table>
+						<br />
+
+						新方向名称：
+						<input name="txtNewDriectionName" type="text" class="text4" id="txtNewDriectionName" style="width:80px;"/>
+						&nbsp;&nbsp;&nbsp;
+						班级命名规则：
+                        <input name="classname" type="text" class="text4" id="classname" style="width:90px;"/>
+                        &nbsp;&nbsp;&nbsp;
+						备注：
+						<input name="txtNewDriectionRemark" type="text" class="text4" id="txtNewDriectionRemark" style="width:100px;"/>
+                        &nbsp;&nbsp;&nbsp;
+						<input name="act" type="button" class="inp_L1" id="addDriection" onclick="return chkForm(this)"
+							value="增 加" onmouseover="this.className='inp_L2'"
+							onmouseout="this.className='inp_L1'" />
+					</td>
+				</tr>
+			</table>
+		</form>

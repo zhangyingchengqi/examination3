@@ -1,0 +1,187 @@
+
+<p>
+    <br>
+<script type="text/javascript" language="javascript">
+    $(function(){
+        $.post("/Examination2.0/systemUser_showTeacherInfo.action",
+            function(json){
+                alert(json);
+                var strJSON = json;
+                var obj = eval(strJSON);// 转换后的JSON对象
+                var result = '';
+                $("#systemuser").html("");
+                for (var i = 0; i < obj.length; i++) {
+                    result += '<option value ="'+obj[i].id+'">'+obj[i].userName+'</option>';
+                }
+                $("#systemuser").append(result);
+        });
+    });
+    
+    function submitCheck(){
+        var sys_id = $("#systemuser").val();
+        var checkDate = $("#checkDate").val();
+        
+        var answer = $("input[name='answer']").val();
+        var answer1 = $("#answer1").val();
+        var answer2 = $("#answer2").val();
+        
+        jQuery("input[name='answer']").each(function(){
+            alert(jQuery(this).val());
+	    });
+        alert(sys_id);
+        alert(checkDate);
+        alert(answer1);
+        alert(answer2);
+        for(var i=1; i < answer.length; i++){
+            alert(answer[i]);
+        }
+    }
+</script>
+</p>
+<table width="700" border="1" align="center" cellspacing="0" id="ctable">
+        <tr align="center">
+            <td height="65" colspan="4"><span class="fontColor linefontsize"><h2>源辰信息学员评教评学</h2></span></td>
+        </tr>
+        <tr>
+            <td colspan="2">教师：
+                <select id="systemuser">
+                </select>
+            </td> 
+            <td>时间：
+                <input type="text" id="checkDate" readonly="readonly"
+                onclick="fPopCalendar(event,this,this)" onfocus="this.select()" />
+            </td> 
+            <td>得分（满分10分)</td>
+        </tr>
+        <tr>
+            <td rowspan="12" style="text-align:center;">理论教学</td>
+            <td rowspan="10" style="text-align:center;">课堂教学</td>
+            <td>备课充分，重，难点突出</td>
+            <td><input type="text" name="answer"></td>
+        </tr>
+        <tr>
+            <td>授课有条理，思路清晰</td>
+            <td><input type="text" name="answer"></td>
+        </tr>
+        <tr>
+            <td>讲课认真，内容熟练</td>
+            <td><input type="text" name="answer"></td>
+        </tr>
+        <tr>
+            <td>语言表达能力</td>
+            <td><input type="text" name="answer"></td>
+        </tr>
+        <tr>
+            <td>案例丰富切合主题</td>
+            <td><input type="text" name="answer"></td>
+        </tr>
+        <tr>
+            <td>讲解有启发性，调动学生主动思考</td>
+            <td><input type="text" name="answer"></td>
+        </tr>
+        <tr>
+            <td>教学形式灵活、与学员互动性</td>
+            <td><input type="text" name="answer"></td>
+        </tr>
+        <tr>
+            <td>及时总结，前后知识衔接</td>
+            <td><input type="text" name="answer"></td>
+        </tr>
+        <tr>
+            <td>方法得当，板书规范</td>
+            <td><input type="text" name="answer"></td>
+        </tr>
+        <tr>
+            <td>知识点讲解完后，有足够的时间上机操练</td>
+            <td><input type="text" name="answer"></td>
+        </tr>
+        <tr>
+            <td rowspan="2" style="text-align:center;">作业辅导</td>
+            <td>作业适量，批改及时，讲评认真</td>
+            <td><input type="text" name="answer"></td>
+        </tr>
+        <tr>
+            <td>坚持课后辅导且耐心细致</td>
+            <td><input type="text" name="answer"></td>
+        </tr>
+        <tr>
+            <td colspan="2" rowspan="7" style="text-align:center;">实践教学</td>
+            <td>认真负责，准备充分</td>
+            <td><input type="text" name="answer"></td>
+        </tr>
+        <tr>
+            <td>上机内容明确清楚</td>
+            <td><input type="text" name="answer"></td>
+        </tr>
+        <tr>
+            <td>巡回指导主动性</td>
+            <td><input type="text" name="answer"></td>
+        </tr>
+        <tr>
+            <td>指导耐心细致</td>
+            <td><input type="text" name="answer"></td>
+        </tr>
+        <tr>
+            <td>组织严谨，以身作则</td>
+            <td><input type="text" name="answer"></td>
+        </tr>
+        <tr>
+            <td>完成实践实训任务</td>
+            <td><input type="text" name="answer"></td>
+        </tr>
+        <tr>
+            <td>老师解答问题的能力</td>
+            <td><input type="text" name="answer"></td>
+        </tr>
+        <tr>
+            <td colspan="2" rowspan="7" style="text-align:center;">综合素质</td>
+            <td>老师的专业知识技能</td>
+            <td><input type="text" name="answer"></td>
+        </tr>
+        <tr>
+            <td>与学生交流沟通</td>
+            <td><input type="text" name="answer"></td>
+        </tr>
+        <tr>
+            <td>是否按时上下课、课程进度完成</td>
+            <td><input type="text" name="answer"></td>
+        </tr>
+        <tr>
+            <td>老师的责任心与耐心</td>
+            <td><input type="text" name="answer"></td>
+        </tr>
+        <tr>
+            <td>严格课堂纪律，严格考勤</td>
+            <td><input type="text" name="answer"></td>
+        </tr>
+        <tr>
+            <td>言行文明，为人师表</td>
+            <td><input type="text" name="answer"></td>
+        </tr>
+        <tr>
+            <td>敬业爱岗，关心学生，教书育人</td>
+            <td><input type="text" name="answer"></td>
+        </tr>
+        <tr>
+            <td colspan="2">你对教学中最满意的事情是:</td>
+            <td colspan="2"><input type="text" name="answer1" size="70" maxlength="70"></td>
+        </tr>
+        <tr>
+            <td colspan="2">你对教学中最不满的事情是:</td>
+            <td colspan="2" class="answer2"><input type="text" name="answer2" size="70" maxlength="70"></td>
+        </tr>
+
+</table>
+<table width="600" border="0" align="center" cellspacing="0" >
+  <tr height="20">
+    <td width="25%"> &nbsp;</td>
+    <td width="25%"> &nbsp;</td>
+    <td width="25%"> &nbsp;</td>
+    <td width="25%"> &nbsp;</td>
+  </tr>
+  <tr>
+    <td colspan="3"> &nbsp;</td>
+    <td><input name="btnView" type="button" onClick="submitCheck()" value="提交" /> </td>
+  </tr>
+</table>
+
