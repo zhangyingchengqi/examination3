@@ -10,29 +10,47 @@
 <script type="text/javascript" src="../../jslib/jquery.easyui.min.js"></script>
 <script type="text/javascript" src="../../jslib/jeasyui.common.js"></script>
 <script type="text/javascript" src="../../js/createoption.js"></script>
+<script type="text/javascript" src="../../js/checkEClassAndChapter.js"></script>
 <script type="text/javascript" src="../../jslib/locale/easyui-lang-zh_CN.js"></script>
    	<script type="text/javascript">
    		$(function(){
+   		 $.post("/Examination2.0/direction_direction.action", function(json) {
+             var strJSON = json;
+             var obj = eval(strJSON);// 转换后的JSON对象
+             var result = '';
+             for (var i = 0; i < obj.length; i++) {
+                 result += '<option value ="' + obj[i].did + "-" + obj[i].classname
+                         + '">' + obj[i].dname + '</option>';
+             }
+             $("#direction").append(result);
+         });
+   		    
   			createVersionOption();
-  			semester=$('input[name="semester"]:checked').val();
+  			semester="S1";
   			version=$('#version').val();
   			createSelectOption(version,semester);
   			createClassOption();
+            //findPointBySubject();
   			show();
   		});
+   		
+   		
+   		
+   		
    		//选择学期
   		function checkSemester(s){
   			semester=s;
   			version=$('#version').val();
   			createSelectOption(version,semester);
-  			createClassOption()
+  			//createClassOption()
   		}
   		//选择版本
   		function changeVersion(){
-  			semester=$('input[name="semester"]:checked').val();
+  			semester=$('#semestr').val();
   			version=$('#version').val();
   			createSelectOption(version,semester);
   		}
+  		
   		function show(){
   			$('#back_llzpj_datagrid').datagrid({
   				url : '/Examination2.0/assessmentpaper_findAllPointPaper.action',
@@ -407,27 +425,26 @@
 			<td height="43" colspan="3">
 				<table width="100%" border="0" cellspacing="0">
 					<tr height="43">
-						<td width="10%" class="fontColor">学期编号:</td>
-						<td width="8%"><input name='semester' type='radio' id="s1" onClick="checkSemester('S1')" value='S1' checked />S1</td>
-						<td width="8%"><input name='semester' type='radio' id="s2" onClick="checkSemester('S2')" value='S2' />S2 </td>
-						<td width="12%"><input type='radio' name='semester' id="S3" value='S3' onClick="checkSemester('S3')" />S3</td>
+						<td width="12%" class="fontColor">方向:</td>
+						<td width="8%">
+						    <select name="direction" id="direction" onChange="changeDirection()">
+                                <option value="0">
+                            </select>
+						</td>
 						<td width="8%" class="fontColor">版本号:</td>
 						<td width="12%">
-							<select name='version' class='select2' id='version' onChange="changeVersion()">
-							
-							
-							
-							
-							
+							<select name='version' class='select2' id='version' onChange="changeEdition()">
 							</select>
 						</td>
+                        <td width="10%" class="fontColor">学期编号:</td>
+                        <td width="8%">
+                            <select id="semester" onchange="changeSemester()"></select>
+                        </td>
+                        
 						<td width="10%" class="fontColor">科目名称:</td>
-						<td width="34%">
-							<select name='subject' class='select2' id='subject'>
+						<td width="10%">
+							<select name='subject' class='select2' id='subject'  onClick="changeSubject()"">
 							<option value="0" selected="selected">--请选择--</option>
-							
-							
-							
 							</select>
 						  </td>
 						</tr>
@@ -435,9 +452,6 @@
 							<td class="fontColor">测评班级:</td>
 							<td colspan="2">
 								<select name='classes' class='select2' id='classes'>
-								
-								
-								
 								</select>
 							</td>
             				<td>
@@ -461,7 +475,7 @@
 	  </table>
 		</div>
 		<div id="back_zjwh_datagrid_div"
-			data-options="region:'center',title:'课程章节列表'" >
+			data-options="region:'center',title:'课程章节评测试卷列表'" >
 			<table id="back_llzpj_datagrid" >
 
 			</table>

@@ -56,7 +56,6 @@ function getedition(did) {
                             + obj[i].editionName + "</option>");
         }
     });
-    
 }
 
 //获取章节
@@ -85,7 +84,7 @@ function getchapter(sid, semester, flag) {
     });
 }
 
-//获取班级学期数
+//通过DID获取班级学期数
 function getECNum() {
     $.post("/Examination2.0/examineeclass_getCNumByDid.action", {
         did : did
@@ -96,7 +95,7 @@ function getECNum() {
         $("#className").val(newClassName);
     });
 }
-//获取班级
+//通过Did获取班级
 function getClassByDid() {
     did = $("#directionName").val();
     var str = did.split("-");
@@ -110,7 +109,7 @@ function getClassByDid() {
         showClass(obj);
     });
 }
-//获取
+//通过Eid获取班级
 function getClassByEid() {
     sid = $("#editionName").val();
     var str = sid.split("-");

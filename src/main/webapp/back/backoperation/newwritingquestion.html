@@ -12,45 +12,82 @@
 <script type="text/javascript" src="../../jslib/locale/easyui-lang-zh_CN.js"></script>
 <script type="text/javascript">
 	$(function() {
-	    $.post("/Examination2.0/direction_direction.action", function(json){
-            var strJSON=json;
-            var obj = eval(strJSON);//转换后的JSON对象
-            var result ='';
-            for(var i=0;i<obj.length;i++){
-                result += '<option value ="'+obj[i].did+'">'+obj[i].dname+'</option>';
+        $.post("/Examination2.0/direction_direction.action", function(json) {
+            var strJSON = json;
+            var obj = eval(strJSON);// 转换后的JSON对象
+            var result = '';
+            for (var i = 0; i < obj.length; i++) {
+                result += '<option value ="' + obj[i].did + "-" + obj[i].classname
+                        + '">' + obj[i].dname + '</option>';
             }
-            $("#direction").append(result);
+            $("#directionName").append(result);
         });
         
 	    
 	    
 	    
 		createVersionOption();
-		semester = $('input[name="semester"]:checked').val();
+		semester = "S1";
 		checkQuestionType(1);
-		version = $('#version').val();
-		createSelectOption(version, semester);
+		version = $('#editionName').val();
 		subjectId = $('#subject').val();
 		createChapterOption(subjectId);
 	});
 	
-	var did = "0";
-    function changeDirection(){
-        did = $("#direction").val();
-        getedition(did);
-    }
-    function getedition(did){
-        $.post("/Examination2.0/course_edition.action", {did:did},function(json){
-            var strJSON=json;
-            var obj = eval(strJSON);//转换后的JSON对象
-            $("#version").html("");
-            $("#version").append('<option value="0">');
-            for ( var i = 0; i < obj.length; i++) {
-                $("#version").append(
-                "<option value='"+obj[i].id+"'>"+ obj[i].editionName + "</option>");
-            }
-        });
-    }
+	    /* xh */
+	    var did = "";
+	    var eid = "";
+	    var semester = "S1";
+	    var snumber = "0";
+	    var classN = "";
+	    //改变方向
+	    function changeDirection() {
+	        did = $("#directionName").val();
+	        var str = did.split("-");
+	        did = str[0];
+	        classN = str[1];
+	        getedition(did);
+	    }
+	    //改变版本
+	    function changeEdition() {
+	        eid = $("#editionName").val();
+	        var str = eid.split("-");
+	        eid = str[0];
+	        snumber = str[1];
+	        getSemester(snumber);
+	        createSelectOption(eid, semester);
+	    }
+	    //改变学期
+	    function changeSemester() {
+	        semester = $("#semesterName").val();
+
+            createSelectOption(eid, semester);
+	    }
+	  //获取版本
+	    function getedition(did) {
+	        $.post("/Examination2.0/course_edition.action", {
+	            did : did
+	        }, function(json) {
+	            var strJSON = json;
+	            var obj = eval(strJSON);// 转换后的JSON对象
+	            $("#editionName").html("");
+	            $("#editionName").append('<option value="0">');
+	            for (var i = 0; i < obj.length; i++) {
+	                $("#editionName").append(
+	                        "<option value='" + obj[i].id + "-" + obj[i].semesternum+ "'>"
+	                                + obj[i].editionName + "</option>");
+	            }
+	        });
+	    }
+	  //得到学期信息
+	    function getSemester(snumber){
+	        $("#semesterName").html("");
+	        for (var i = 1; i <= snumber; i++) {
+	            $("#semesterName").append(
+	                    "<option value='S" + i + "'>S" + i + "</option>");
+	        }
+	    }
+	
 	
 	
 	function show(){
@@ -194,14 +231,14 @@
 		var strQuestionC = $('#questionC').val();
 		$('#uoptionD').val($('#questionD').val());
 		var strQuestionD = $('#questionD').val();
-		$('#usemester').val($('input[name="semester"]:checked').val())
-		$('#ueditionId').val($('#version').val());
+		$('#usemester').val($('semesterName').val())
+		$('#ueditionId').val(eid);
 		$('#uquestionType').val($('input[name="type"]:checked').val());
 		var type = $('input[name="type"]:checked').val();
 		$('#udifficulty').val($('input[name="difficulty"]:checked').val());
 		$('#usubjectId').val($('#subject').val());
 		$('#uchapterId').val($('#chapter').val());
-		$('#remark').val($('#remark1').html());
+		$('#remark').val($('#remark1').val());
 		var answer = "";
 		if (strQuestion == "" || strQuestionA == "" || strQuestionB == ""
 				|| strQuestionC == "" || strQuestionD == "") {
@@ -251,25 +288,22 @@
 				    <tr>
                         <td height="42" class="fontColor">方向:</td>
                         <td colspan="2">
-                        <select name="direction" id="direction" onChange="changeDirection()"></select>
+                        <select name="direction" id="directionName" onChange="changeDirection()"></select>
                         </td>
                         <td class="fontColor">版本号:</td>
-                        <td colspan="2">&nbsp; <select name='version' class='select'
-                            id='version' onChange="changeVersion()">
+                        <td colspan="2">&nbsp; <select name='editionName' class='select'
+                            id='editionName' onChange="changeEdition()">
                         </select>
                         </td>
                     </tr>
 					<tr>
 						<td width="13%" class="fontColor">学期编号:</td>
-						<td width="17%" height="41"><input name='semester'
-							type='radio' id="s1" onClick="checkSemester('S1')" value='S1'
-							checked /> S1 &nbsp; <input name='semester' type='radio' id="s2"
-							onClick="checkSemester('S2')" value='S2' /> S2</td>
-						<td><input type='radio' name='semester' id="S3" value='S3'
-							onClick="checkSemester('S3')" /> S3</td>
+						<td width="17%" height="41"  colspan="2">
+						  <select id="semesterName" onchange="changeSemester()"></select>
+						</td>
 						<td><span class="fontColor">题目类型:</span>
 						</td>
-						<td><input name="type" type="radio"
+						<td colspan="2"><input name="type" type="radio"
 							onClick="checkQuestionType(1)" value="1" checked /> 单选题
 							&nbsp;&nbsp;&nbsp;&nbsp; <input id="checkQuestionObject"
 							type="radio" name="type" value="2" onClick="checkQuestionType(2)" />
@@ -400,7 +434,7 @@
 					</tr>
 					<tr>
 						<td colspan="3"><textarea name="remark1" class="content"
-								id="remark1"> 录入此题</textarea></td>
+								id="remark1">录入此题</textarea></td>
 					</tr>
 					<tr>
 						<td colspan="3">出题备注:凡是带有 * 号的输入框必须正确添入,不可以为空!</td>

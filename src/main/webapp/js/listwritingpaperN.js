@@ -1,32 +1,135 @@
+$(function() {
+        $.post("/Examination2.0/direction_direction.action", function(json) {
+            var strJSON = json;
+            var obj = eval(strJSON);// 转换后的JSON对象
+            var result = '';
+            for (var i = 0; i < obj.length; i++) {
+                result += '<option value ="' + obj[i].did + "-" + obj[i].classname
+                        + '">' + obj[i].dname + '</option>';
+            }
+            $("#directionName").append(result);
+            
+            getedition(1);
+        });
+        
+
+        var selectedvalue="S1";
+        $.getJSON("/Examination2.0/writingPaper_getExamineeClassName.action",{"semester":selectedvalue}, function(data){
+                var examineeClassList= eval("("+data+")");
+                var optionstr="<option>--请选择--</option>";                                                               
+                if(examineeClassList!=null){
+                    $.each(examineeClassList, function(i,examineeClass){
+                    optionstr+="<option value='"+examineeClass.className+"' name='className'>"+examineeClass.className+"</option>";                                                         
+                    }); 
+                }           
+                $("#examClassName").html(optionstr);
+                });     
+    })
+
+    /* xh */
+    var did = "";
+    var eid = "";
+    var semester = "S1";
+    var snumber = "0";
+    var classN = "";
+    //改变方向
+    function changeDirection() {
+        did = $("#directionName").val();
+        var str = did.split("-");
+        did = str[0];
+        classN = str[1];
+        getedition(did);
+        getClassByDid()
+    }
+    //改变版本
+    function changeEdition() {
+        eid = $("#editionName").val();
+        var str = eid.split("-");
+        eid = str[0];
+        snumber = str[1];
+        getSemester(snumber);
+
+        getClassByEid()
+    }
+    //改变学期
+    function changeSemester() {
+        semester = $("#semesterName").val();
+        createSelectOption(semester)
+    }
+  //获取版本
+    function getedition(did) {
+        $.post("/Examination2.0/course_edition.action", {
+            did : did
+        }, function(json) {
+            var strJSON = json;
+            var obj = eval(strJSON);// 转换后的JSON对象
+            $("#editionName").html("");
+            $("#editionName").append('<option value="0">');
+            for (var i = 0; i < obj.length; i++) {
+                $("#editionName").append(
+                        "<option value='" + obj[i].id + "-" + obj[i].semesternum+ "'>"
+                                + obj[i].editionName + "</option>");
+            }
+        });
+    }
+  //得到学期信息
+    function getSemester(snumber){
+        $("#semesterName").html("");
+        for (var i = 1; i <= snumber; i++) {
+            $("#semesterName").append(
+                    "<option value='S" + i + "'>S" + i + "</option>");
+        }
+    }
+  //通过Did获取班级
+    function getClassByDid() {
+        did = $("#directionName").val();
+        var str = did.split("-");
+        did = str[0];
+        classN = str[1];
+        getedition(did);
+        $.post("/Examination2.0/examineeclass_getCNumByDid.action", {
+            did : did
+        }, function(json) {
+            var obj = eval(json);// 转换后的JSON对象
+            showClass(obj);
+        });
+    }
+    //通过Eid获取班级
+    function getClassByEid() {
+        eid = $("#editionName").val();
+        var str = eid.split("-");
+        eid = str[0];
+        snumber = str[1];
+        $.post("/Examination2.0/examineeclass_getClassByEdition.action", {
+            eid : eid,
+        }, function(json) {
+            var obj = eval(json);// 转换后的JSON对象
+            showClass(obj);
+        });
+    }
+
+    function showClass(obj){
+        $("#examClassName").html("<option>--请选择--</option>");
+        if (obj == null) {
+            $("#examClassName").append("<option>--请选择--</option>");
+        }
+        for ( var i = 0; i < obj.length; i++) {
+            $("#examClassName").append("<option value='"+obj[i].className+"' name='className'>"+obj[i].className+"</option>"); 
+        }
+    }
+    
+    
+    
+    
+
 //根据学期显示班级 	
 	function createSelectOption(s){
  		var selectedvalue=s;
  		$.getJSON("/Examination2.0/writingPaper_getExamineeClassName.action",{"semester":selectedvalue}, function(data){
 				var examineeClassList= eval("("+data+")");
-				var optionstr="<option>--请选择--</option>";	
-				if(examineeClassList!=null){
-					$.each(examineeClassList, function(i,examineeClass){
-  					optionstr+="<option value='"+examineeClass.className+"' name='className'>"+examineeClass.className+"</option>";	  														
-					});	
-				}																
-				$("#examClassName").html(optionstr);
-  				});  				  		
+				 showClass(examineeClassList)
+  		});  				  		
  	}
- 	$(function(){
- 		var selectedvalue="S1";
- 		
- 		$.getJSON("/Examination2.0/writingPaper_getExamineeClassName.action",{"semester":selectedvalue}, function(data){
-				var examineeClassList= eval("("+data+")");
-				var optionstr="<option>--请选择--</option>";																
-				if(examineeClassList!=null){
-					$.each(examineeClassList, function(i,examineeClass){
-  					optionstr+="<option value='"+examineeClass.className+"' name='className'>"+examineeClass.className+"</option>";	  														
-					});	
-				}			
-				$("#examClassName").html(optionstr);
-  				});  			
- 	});
- 	
  	
  	//移到焦点除变颜色
  	function overChangeColor(myColor,myId){

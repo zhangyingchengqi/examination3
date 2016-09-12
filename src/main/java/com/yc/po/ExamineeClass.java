@@ -159,8 +159,10 @@ public class ExamineeClass implements Serializable {
 	public void setRemark(String remark) {
 		this.remark = remark;
 	}
-
-
-	
-	
+    @Override
+    public String toString() {
+        return "ExamineeClass [id=" + id + ", className=" + className + ", eid=" + eid + ", semester=" + semester + ", createDate=" + createDate
+                + ", overDate=" + overDate + ", remark=" + remark + ", pointPapers=" + pointPapers + ", checkings=" + checkings + ", aDailyTalks="
+                + aDailyTalks + "]";
+    }
 }

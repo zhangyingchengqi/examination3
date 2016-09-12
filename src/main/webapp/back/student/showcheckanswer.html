@@ -1,0 +1,238 @@
+    <META http-equiv=Content-Type content="text/html; charset=utf-8">
+    <link href="../../css/szindex.css" type=text/css rel=stylesheet>
+    <script src="http://lib.sinaapp.com/js/jquery/1.9.1/jquery-1.9.1.js"></script>
+<script type="text/javascript">
+!window.jQuery && document.write('<script src=../../js/jquery-1.9.1.js><\/script>');
+</script>
+<script type="text/javascript" src="../../js/dateChoose.js"></script>
+<script type="text/javascript" src="../../js/showcheckanswer.js"></script>
+  
+  <body>
+      <table width="800" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+		    <td height="30" align="center">
+		      </td>
+		  </tr>
+        <tr>
+          <td width="7%" class="fontColor" align="right">方向:</td>
+            <td width="10%">&nbsp;&nbsp;
+                <select name="direction" id="direction" onChange="changeDirection()">
+                    <option value="0">
+            </select></td>
+          <td width="10%" height="34" class="fontColor" align="right">班级名称:</td>
+          <td width="10%">&nbsp;&nbsp;
+            <select class="text4" name="examclassid" id="examclassid" onChange="changeClass()">
+             	 <option selected value="0">--请选择--</option>
+            </select>
+          </td>
+            <td width="10%" height="34" class="fontColor" align="right">评教时间:</td>
+          <td width="10%">&nbsp;&nbsp;
+            <input type="text" id="checkDate" readonly="readonly"  width="10px"
+                onclick="fPopCalendar(event,this,this)" onfocus="this.select()" />
+          </td>
+        </tr>
+        <tr>
+          <td width="10%" class="fontColor" align="right">考生姓名:</td>
+          <td width="10%" align="left"><span class="prompt">&nbsp;&nbsp;
+            <select name="examineeName" id="examineeName" class="text4" onChange="changeExaminee()">
+                <option selected value="0">--请选择--</option>
+            </select>
+            </span>
+          </td>
+          <td width="10%" class="fontColor" align="right">教师姓名:</td>
+          <td width="10%" align="left"><span class="prompt">&nbsp;&nbsp;
+            <select name="systemName" id="systemName" class="text4" onChange="changeSystem()">
+                <option selected value="0">--请选择--</option>
+            </select>
+            </span>
+          </td>
+        </tr>
+      </table>
+      <br>
+       <table width="700" border="1" align="center" cellspacing="0" id="ctable">
+        <tr align="center">
+            <td height="65" colspan="6"><span class="fontColor linefontsize"><h2>源辰信息学员评教评学统计</h2></span></td>
+        </tr>
+        <tr>
+            <td colspan="3" style="text-align:center;">评教项目
+            </td> 
+            <td style="text-align:center;"><span id="span1"> </span></td>
+            <td style="text-align:center;"><span id="span2"> </span></td>
+            <td style="text-align:center;"><span id="span3"> </span></td>
+        </tr>
+        <tr>
+            <td rowspan="12" style="width:12%;text-align:center;">理论教学</td>
+            <td rowspan="10" style="width:12%;text-align:center;">课堂教学</td>
+            <td style="width:26%;">备课充分，重，难点突出</td>
+            <td style="width:10%;"><span id="answer1_1"></span></td>
+            <td style="width:10%;"><span id="answer1_2"></span></td>
+            <td style="width:10%;"><span id="answer1_3"></span></td>
+        </tr>
+        <tr>
+            <td>授课有条理，思路清晰</td>
+            <td><span id="answer2_1"></span></td>
+            <td><span id="answer2_2"></span></td>
+            <td><span id="answer2_3"></span></td>
+        </tr>
+        <tr>
+            <td>讲课认真，内容熟练</td>
+            <td><span id="answer3_1"></span></td>
+            <td><span id="answer3_2"></span></td>
+            <td><span id="answer3_3"></span></td>
+        </tr>
+        <tr>
+            <td>语言表达能力</td>
+            <td><span id="answer4_1"></span></td>
+            <td><span id="answer4_2"></span></td>
+            <td><span id="answer4_3"></span></td>
+        </tr>
+        <tr>
+            <td>案例丰富切合主题</td>
+            <td><span id="answer5_1"></span></td>
+            <td><span id="answer5_2"></span></td>
+            <td><span id="answer5_3"></span></td>
+        </tr>
+        <tr>
+            <td>讲解有启发性，调动学生主动思考</td>
+            <td><span id="answer6_1"></span></td>
+            <td><span id="answer6_2"></span></td>
+            <td><span id="answer6_3"></span></td>
+        </tr>
+        <tr>
+            <td>教学形式灵活、与学员互动性</td>
+            <td><span id="answer7_1"></span></td>
+            <td><span id="answer7_2"></span></td>
+            <td><span id="answer7_3"></span></td>
+        </tr>
+        <tr>
+            <td>及时总结，前后知识衔接</td>
+            <td><span id="answer8_1"></span></td>
+            <td><span id="answer8_2"></span></td>
+            <td><span id="answer8_3"></span></td>
+        </tr>
+        <tr>
+            <td>方法得当，板书规范</td>
+            <td><span id="answer9_1"></span></td>
+            <td><span id="answer9_2"></span></td>
+            <td><span id="answer9_3"></span></td>
+        </tr>
+        <tr>
+            <td>知识点讲解完后，有足够的时间上机操练</td>
+            <td><span id="answer10_1"></span></td>
+            <td><span id="answer10_2"></span></td>
+            <td><span id="answer10_3"></span></td>
+        </tr>
+        <tr>
+            <td rowspan="2" style="text-align:center;">作业辅导</td>
+            <td>作业适量，批改及时，讲评认真</td>
+            <td><span id="answer11_1"></span></td>
+            <td><span id="answer11_2"></span></td>
+            <td><span id="answer11_3"></span></td>
+        </tr>
+        <tr>
+            <td>坚持课后辅导且耐心细致</td>
+            <td><span id="answer12_1"></span></td>
+            <td><span id="answer12_2"></span></td>
+            <td><span id="answer12_3"></span></td>
+        </tr>
+        <tr>
+            <td colspan="2" rowspan="7" style="text-align:center;">实践教学</td>
+            <td>认真负责，准备充分</td>
+            <td><span id="answer13_1"></span></td>
+            <td><span id="answer13_2"></span></td>
+            <td><span id="answer13_3"></span></td>
+        </tr>
+        <tr>
+            <td>上机内容明确清楚</td>
+            <td><span id="answer14_1"></span></td>
+            <td><span id="answer14_2"></span></td>
+            <td><span id="answer14_3"></span></td>
+        </tr>
+        <tr>
+            <td>巡回指导主动性</td>
+            <td><span id="answer15_1"></span></td>
+            <td><span id="answer15_2"></span></td>
+            <td><span id="answer15_3"></span></td>
+        </tr>
+        <tr>
+            <td>指导耐心细致</td>
+            <td><span id="answer16_1"></span></td>
+            <td><span id="answer16_2"></span></td>
+            <td><span id="answer16_3"></span></td>
+        </tr>
+        <tr>
+            <td>组织严谨，以身作则</td>
+            <td><span id="answer17_1"></span></td>
+            <td><span id="answer17_2"></span></td>
+            <td><span id="answer17_3"></span></td>
+        </tr>
+        <tr>
+            <td>完成实践实训任务</td>
+            <td><span id="answer18_1"></span></td>
+            <td><span id="answer18_2"></span></td>
+            <td><span id="answer18_3"></span></td>
+        </tr>
+        <tr>
+            <td>老师解答问题的能力</td>
+            <td><span id="answer19_1"></span></td>
+            <td><span id="answer19_2"></span></td>
+            <td><span id="answer19_3"></span></td>
+        </tr>
+        <tr>
+            <td colspan="2" rowspan="7" style="text-align:center;">综合素质</td>
+            <td>老师的专业知识技能</td>
+            <td><span id="answer20_1"></span></td>
+            <td><span id="answer20_2"></span></td>
+            <td><span id="answer20_3"></span></td>
+        </tr>
+        <tr>
+            <td>与学生交流沟通</td>
+            <td><span id="answer21_1"></span></td>
+            <td><span id="answer21_2"></span></td>
+            <td><span id="answer21_3"></span></td>
+        </tr>
+        <tr>
+            <td>是否按时上下课、课程进度完成</td>
+            <td><span id="answer22_1"></span></td>
+            <td><span id="answer22_2"></span></td>
+            <td><span id="answer22_3"></span></td>
+        </tr>
+        <tr>
+            <td>老师的责任心与耐心</td>
+            <td><span id="answer23_1"></span></td>
+            <td><span id="answer23_2"></span></td>
+            <td><span id="answer23_3"></span></td>
+        </tr>
+        <tr>
+            <td>严格课堂纪律，严格考勤</td>
+            <td><span id="answer24_1"></span></td>
+            <td><span id="answer24_2"></span></td>
+            <td><span id="answer24_3"></span></td>
+        </tr>
+        <tr>
+            <td>言行文明，为人师表</td>
+            <td><span id="answer25_1"></span></td>
+            <td><span id="answer25_2"></span></td>
+            <td><span id="answer25_3"></span></td>
+        </tr>
+        <tr>
+            <td>敬业爱岗，关心学生，教书育人</td>
+            <td><span id="answer26_1"></span></td>
+            <td><span id="answer26_2"></span></td>
+            <td><span id="answer26_3"></span></td>
+        </tr>
+        <tr>
+            <td colspan="3">你对教学中最满意的事情是:</td>
+            <td><span id="answer27_1"></span></td>
+            <td><span id="answer27_2"></span></td>
+            <td><span id="answer27_3"></span></td>
+        </tr>
+        <tr>
+            <td colspan="3">你对教学中最不满的事情是:</td>
+            <td><span id="answer28_1"></span></td>
+            <td><span id="answer28_2"></span></td>
+            <td><span id="answer28_3"></span></td>
+        </tr>
+
+</table>
+  </body>

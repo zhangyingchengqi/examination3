@@ -45,4 +45,16 @@ public class ClassSemesterBizImpl implements ClassSemesterBiz {
         return null;
     }
 
+    @Override
+    public ClassSemester findClassSemesterById(String id) {
+        String[] params=new String[]{id};
+        String sql = "from ClassSemester cs where cs.id=?";
+        
+        List<ClassSemester> list=baseDao.search(sql,params);
+        if( list!=null&&list.size()>0 ){    
+            return list.get(0);
+        }   
+        return null;
+    }
+
 }

@@ -190,8 +190,6 @@ public class WritingPaperAction extends BaseAction
 	public void addWritingPaperQuestionId(){
 		String jsonStr="";
 		try {
-			System.out.println(questionId);
-			System.out.println(wpid);
 			List<WritingPaper> lists=writingPaperBiz.searchWritingPaper(wpid);
 			String questionIds="";
 			if(null!=lists&&lists.size()>0){

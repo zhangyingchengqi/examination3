@@ -1,6 +1,5 @@
 $(function() {
-	var semester = $("#semesterS1").attr('value');
-	$("#semesterS1").prop('checked', true);
+	var semester ="S1";
 	showClassName(semester);
 
 })
@@ -62,7 +61,7 @@ function reset(){
 
 // 组合查询考勤记录
 function findCheckingInfoByAll() {
-	var semester = $("input[name=semester]:checked").text().trim(); // 学期
+	var semester = $("input[name=semesterName]:checked").text().trim(); // 学期
 	var cid = $("#examineeClass").val(); // 班级编号
 	var stuname = $("#examineeName").find("option:selected").text().trim(); // 学生姓名
 	var startdate = $("#startDate").val(); // 查询开始时间
@@ -499,7 +498,7 @@ function checkingInfoByPointOut(val) {
 
 // 学生端考勤记录查询
 function findCheckingInfoByMe() {
-	var semester = $('#semester').val();
+	var semester = $('#semesterName').val();
 	var startDate = $('#startDate').val();
 	var endDate = $('#endDate').val();
 	var dateTime = $('#dateTime').val();

@@ -5,6 +5,7 @@ import org.apache.log4j.Logger;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.Map;
 
@@ -17,6 +18,7 @@ import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.interceptor.ServletResponseAware;
 import org.apache.struts2.interceptor.SessionAware;
 import org.hibernate.HibernateException;
+
 
 
 
@@ -78,7 +80,6 @@ public class CourseAction  extends ActionSupport implements ServletResponseAware
 		}
 		result = JSON.toJSONString(currentUse); 
 		
-		System.out.println(result);
 		out.print(result);
 		out.flush();
 		} catch (Exception e) {
@@ -134,6 +135,22 @@ public class CourseAction  extends ActionSupport implements ServletResponseAware
 		out.close();
 		
 	}
+	
+	public void upgradeCurrent(){
+	    HttpServletRequest req = ServletActionContext.getRequest();
+	    String  editionName = null;
+	    try {
+            editionName=new String(req.getParameter("oldename").getBytes("iso-8859-1"),"UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        Integer semesternum=Integer.parseInt(req.getParameter("oldsnum"));
+        int did=Integer.parseInt(req.getParameter("did"));
+        
+        String ename = "";
+        //editionName
+	}
+	
 	
 	//更新当前版本
 	public void updateCurrent(){

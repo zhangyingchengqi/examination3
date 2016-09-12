@@ -200,7 +200,6 @@ public class SubjectAction extends BaseAction implements ServletResponseAware,Se
         }*/
 		
 		
-		System.out.println(semester+"\t"+subjectName);
 		Edition edition=new Edition();
 		edition.setId(editionId);
 	

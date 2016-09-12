@@ -161,8 +161,10 @@ function serchExaminee(className){
 										"value='"+obj[i].name+"' class='text4' size='18' maxlength='18' "+
 										"name='name' id='examinee_"+(i+1)+"'>"+
 										"</td>"+
-										"<td align='center' width='80'><a href='#' onClick=updateExaminee('"+(i+1)+"','"+obj[i].name+"')>修改</a>"+
-										"&nbsp;&nbsp;&nbsp;<a href='#' onClick=deleteExaminee('"+obj[i].name+"')>删除</a>"+
+										"<td align='center' width='150'>"+
+                                        "<a href='examineeinfo.html?op=show&id="+obj[i].id+"'>详细信息</a>&nbsp;&nbsp;&nbsp;"+
+										"<a href='#' onClick=updateExaminee('"+(i+1)+"','"+obj[i].name+"')>修改</a>&nbsp;&nbsp;&nbsp;"+
+										"<a href='#' onClick=deleteExaminee('"+obj[i].name+"')>删除</a>"+
 										"</td>"+
 										"</tr>");
 		}

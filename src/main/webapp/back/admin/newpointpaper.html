@@ -10,81 +10,54 @@
 <script type="text/javascript" src="../../jslib/jquery.easyui.min.js"></script>
 <script type="text/javascript" src="../../jslib/jeasyui.common.js"></script>
 <script type="text/javascript" src="../../js/createoption.js"></script>
+<script type="text/javascript" src="../../js/checkEClassAndChapter.js"></script>
 <script type="text/javascript" src="../../jslib/locale/easyui-lang-zh_CN.js"></script>
-  	<script type="text/javascript">
+<script type="text/javascript">
   		$(function(){
-	  		  $.post("/Examination2.0/direction_direction.action", function(json){
-	              var strJSON=json;
-	              var obj = eval(strJSON);//转换后的JSON对象
-	              var result ='';
-	              for(var i=0;i<obj.length;i++){
-	                  result += '<option value ="'+obj[i].did+'">'+obj[i].dname+'</option>';
-	              }
-	              $("#direction").append(result);
-	          });
+  		  $.post("/Examination2.0/direction_direction.action", function(json) {
+              var strJSON = json;
+              var obj = eval(strJSON);// 转换后的JSON对象
+              var result = '';
+              for (var i = 0; i < obj.length; i++) {
+                  result += '<option value ="' + obj[i].did + "-" + obj[i].classname
+                          + '">' + obj[i].dname + '</option>';
+              }
+              $("#direction").append(result);
+          });
 	         
   		    
   			//createVersionOption();
-  			semester=$('input[name="semester"]:checked').val();
+  			semester="S1";
   			version=$('#version').val();
   			createSelectOption(version,semester);
   			createClassOption();
   			findPointBySubject();
   		});
   		
-  		var did = "0";
-        function changeDirection(){
-            did = $("#direction").val();
-            getedition(did);
-        }
-        function getedition(did){
-            $.post("/Examination2.0/course_edition.action", {did:did},function(json){
-                var strJSON=json;
-                var obj = eval(strJSON);//转换后的JSON对象
-                $("#version").html("");
-                $("#version").append('<option value="0">');
-                for ( var i = 0; i < obj.length; i++) {
-                    $("#version").append(
-                    "<option value='"+obj[i].id+"'>"+ obj[i].editionName + "</option>");
-                }
-            });
-        }
-        var sid = "0";
-        function changeSubject(){
-            sid = $("#subject").val();
-            getchapter(sid);
-        }
-        function getchapter(sid){
-            findPointBySubject();
-            $.post("/Examination2.0/chapter_findChapterBySubject.action", {sid:sid},function(json){
-                var obj = ($.parseJSON( json )).obj;
-                $("#chapter").html("");
-                $("#chapter").append('<option value="0">');
-                for ( var i = 0; i < obj.length; i++) {
-                    $("#chapter").append("<option value='"+obj[i].id+"'>"+ obj[i].chapterName + "</option>");
-                }
-            });
-        }
+        
   		
   		
   		//选择学期
   		function checkSemester(s){
   			semester=s;
   			version=$('#version').val();
+  		    //生成科目列表
   			createSelectOption(version,semester);
+  		    //生成班级列表
   			//createClassOption()
+  			//查询知识点
   			findPointBySubject();
   		}
   		//选择版本
   		function changeVersion(){
-  			semester=$('input[name="semester"]:checked').val();
+  			semester=$('#semester').val();
   			version=$('#version').val();
   			createSelectOption(version,semester);
   			findPointBySubject()
   		}
   		
   		//查询知识点
-  		function findPointBySubject(){
+  		function findPointBySubject(sid){
   			sid=$('#subject').val();
   			$.ajax({
   				url:"/Examination2.0/assessment_getPointBySid.action",
@@ -267,14 +240,13 @@
                             </td>
                             <td width="10%" class="fontColor">版本号:</td>
                             <td width="12%">
-                                <select name='version' class='select2' id='version' onClick="changeVersion()">
+                                <select name='version' class='select2' id='version' onClick="changeEdition()">
                                 </select>
                             </td>
 							<td width="10%" class="fontColor">学期编号:</td>
-							<td width="10%"><input name='semester' type='radio' id="s1" onClick="checkSemester('S1')" value='S1' checked />S1</td>
-							<td width="10%"><input name='semester' type='radio' id="s2" onClick="checkSemester('S2')" value='S2' />S2 </td>
-							<td width="12%"><input type='radio' name='semester' id="S3" value='S3' onClick="checkSemester('S3')" />S3</td>
-							
+							<td width="10%">
+							     <select id="semester" onchange="changeSemester()"></select>
+							</td>
 						</tr>
 						<tr height="43">
 						    <td class="fontColor">科目名称:</td>

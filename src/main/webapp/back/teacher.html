@@ -15,6 +15,7 @@
 <script type="text/javascript" src="../js/ajax.js"></script>
 <script type="text/javascript" src="../jslib/locale/easyui-lang-zh_CN.js"></script>
 	
+<script type="text/javascript" src="../js/dateChoose.js"></script>
 <link href="../css/szindex.css" type=text/css rel=stylesheet>
 <script type="text/javascript" language="javascript" src="../js/creatXML.js"></script>
 <script type="text/javascript" language="javascript" src="../js/sendrequest.js"></script>
@@ -38,6 +39,7 @@
 			});
 		});
 		
+		$("body").layout('collapse','east');
 		
 		$("#back_mainTab").tabs('add', {
 			title : '主界面',
@@ -156,6 +158,7 @@
 </script>
 </head>
 <body class="easyui-layout">
+
 	<!-- 头部 -->
 	<div data-options="region:'north',border:false" style="height:83px;">
 		<img style="padding-left: 20px;" height="80px" width="337px"
@@ -409,10 +412,7 @@
 					<li><span>教学评测</span>
                         <ul>
                             <li><a href="#"
-                                onclick="javascript:addTab('发布评测','icon-mini-add',true,'','<iframe src=student/newclass.html  frameborder=0 style=border:0;width:100%;height:99.5%;></iframe>')">发布评测</a>
-                            </li>
-                            <li><a href="#"
-                                onclick="javascript:addTab('评测结果','icon-mini-add',true,'','<iframe src=student/listclass.html  frameborder=0 style=border:0;width:100%;height:99.5%;></iframe>')">评测结果</a>
+                                onclick="javascript:addTab('评教结果','icon-mini-add',true,'','<iframe src=student/showcheckanswer.html  frameborder=0 style=border:0;width:100%;height:99.5%;></iframe>')">评教结果</a>
                             </li>
                         </ul>
                     </li>
@@ -544,7 +544,7 @@
 	</div>
 
 	<!-- 东边 -->
-	<div data-options="region:'east',split:true,title:'工具箱'"
+	<div data-options="region:'east',split:true,title:'工具箱'" id="eastdiv"  collapse
 		style="width:170px;padding:10px;">
 		<div class="easyui-calendar" style="width:150px;height:150px;"></div>
 	</div>
@@ -562,9 +562,10 @@
         		iconCls:'icon-unfull',
        			handler:function(){unFull()}   
     		}]">
-		<div id="back_mainTab" class="easyui-tabs" data-options="fit:true">
-		</div>
+		<div id="back_mainTab" class="easyui-tabs" data-options="fit:true" align="center">
 		
+		</div>
 	</div>
+
 </body>
 </html>

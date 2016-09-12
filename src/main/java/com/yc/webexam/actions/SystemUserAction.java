@@ -246,7 +246,6 @@ public class SystemUserAction extends BaseAction {
                 for (SystemUser systemUser : lists) {
                     systemUser.setCheckings(null);
                 }
-                System.out.println("----------------"+lists);
                 jsonStr = JSON.toJSONString(lists,SerializerFeature.DisableCircularReferenceDetect);
             } catch (Exception e) {
                 jsonStr=super.writeJson(1, "查询失败！");

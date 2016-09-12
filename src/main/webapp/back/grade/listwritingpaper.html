@@ -49,22 +49,38 @@
 						<tr>
 							<td>
 								<table width="100%" border="0" cellspacing="0">
+								    <tr>
+                                        <td width="10%" height="25">
+                                            <div align="left">
+                                                <label class="fontColor"> 方向: </label>
+                                            </div></td>
+                                        <td width="38%">
+                                            <select name="directionName" id="directionName" onChange="changeDirection()">
+		                                        <option value="0" selected="selected">--请选择--</option>
+		                                    </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td height="25">
+                                            <div align="left">
+                                                <label class="fontColor"> 版本: </label>
+                                            </div></td>
+                                        <td width="38%">
+		                                    <select name="editionName" id="editionName" onChange="changeEdition()">
+		                                    </select>
+                                        </td>
+                                    </tr>
 									<tr>
-										<td width="15%" height="46">
+										<td height="25">
 											<div align="left">
 												<label class="fontColor"> 学期编号: </label>
 											</div></td>
-										<td width="38%"><input name="semester" type="radio"
-											value="S1" checked="checked"
-											onClick="createSelectOption('S1')"> S1
-											&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="radio"
-											name="semester" value="S2" onClick="createSelectOption('S2')">
-											S2 &nbsp;&nbsp;&nbsp;&nbsp; <input type="radio"
-											name="semester" value="S3" onClick="createSelectOption('S3')">
-											S3</td>
+										<td width="38%">
+										      <select id="semesterName" onchange="changeSemester()"></select>
+										</td>
 									</tr>
 									<tr>
-										<td width="15%" height="41">
+										<td height="25">
 											<div align="left" class="fontColor">班级名称:</div></td>
 										<td width="38%">
 											<div align="left">
@@ -75,7 +91,7 @@
 										<td class="fontColor"><span id="strPrompt"> </span></td>
 									</tr>
 									<tr>
-										<td height="37">
+										<td height="25">
 											<div align="left"></div>
 											<div align="left">
 												<span class="fontColor">显示行数:</span>

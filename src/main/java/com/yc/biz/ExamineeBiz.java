@@ -42,7 +42,7 @@ public interface ExamineeBiz {
 	 * @throws Exception
 	 */
 
-	public List<String> findAllStuNameByClassName(String className);
+	public List<Examinee> findAllStuNameByClassName(String className);
 	/**
 	 * 通过班级编号得到所有的考生姓名
 	 * 
@@ -219,6 +219,8 @@ public interface ExamineeBiz {
 	 * @return
 	 */
 	public Examinee getExaminee(String name, String password, String className);
+	
+	public Examinee getExamineeById(String id);
 	
 	public List<Examinee> getAllExaminee(String className);
 

@@ -1,5 +1,3 @@
-
-
 $(function(){
     $.post("/Examination2.0/direction_direction.action", function(json){
         var strJSON=json;
@@ -14,7 +12,6 @@ $(function(){
 
 
 var did = "";
-
 function changeDirection(){
     did = $("#direction").val();
     getedition(did);
@@ -24,7 +21,6 @@ function getedition(did){
     $.post("/Examination2.0/course_edition.action", {did:did},function(json){
         var strJSON=json;
         var obj = eval(strJSON);//转换后的JSON对象
-
         //alert();
         $("#showEdition").html("");
         for(var i=0;i<obj.length;i++){
@@ -51,7 +47,7 @@ function getedition(did){
                                 +"  </td>"
                                 +"  <td align='center'>"
                                 +"      <input name='act' type='button' class='inp_L1' "
-                                +"          value='删 除' id='"+obj[i].id+"' onclick='return chkForm(this)' "
+                                +"          value='升 级' id='"+obj[i].id+"' onclick='upgrade("+obj[i].id+" )' "
                                 +"          onmouseover=this.className='inp_L2' "
                                 +"          onmouseout=this.className='inp_L1' />"
                                 +"  </td></tr> ");
@@ -65,8 +61,6 @@ function getedition(did){
 
 //修改按钮
 function chkUpdate(id,edition,snum,OeditionName) {
-	
-	
 	var editionId=id;
 	var editionName=$("#"+edition).val();
     var semesternum=$("#"+snum).val();
@@ -124,6 +118,31 @@ function chkUpdate(id,edition,snum,OeditionName) {
 	            });*/
 		}
 	});
+}
+
+function upgrade(eid ){
+    var oldename = $("#editionName"+eid).val();
+    var oldsnum = $("#semesternum"+eid).val();
+    
+    $.post("/Examination2.0/course_upgradeCurrent.action",{did:did,oldename:oldename,oldsnum:oldsnum},function(data){
+        if(data==1){
+            alert('版本号修改成功');
+            /*$.messager.show({
+                title:'提示',
+                msg:'版本号修改成功',
+                timeout:3000,
+                showType:'slide'
+                });*/
+        }else{
+            alert('版本号修改失败');
+            /*$.messager.show({
+                title:'提示',
+                msg:'版本号修改失败',
+                timeout:3000,
+                showType:'slide'
+                });*/
+        }
+    });
 }
 
 //增加和删除按钮

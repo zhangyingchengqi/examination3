@@ -32,4 +32,5 @@ public interface ClassSemesterBiz {
      */
     public List<ClassSemester> findClassSemesterByEC(String ECid);
     
+    public ClassSemester findClassSemesterById(String id);
 }

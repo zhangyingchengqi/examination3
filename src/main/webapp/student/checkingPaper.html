@@ -5,7 +5,6 @@
     $(function(){
         $.post("/Examination2.0/systemUser_showTeacherInfo.action",
             function(json){
-                alert(json);
                 var strJSON = json;
                 var obj = eval(strJSON);// 转换后的JSON对象
                 var result = '';
@@ -15,27 +14,42 @@
                 }
                 $("#systemuser").append(result);
         });
+        
+        jQuery("input[name='answer']").blur(function(){
+            if(parseInt($(this).val()) > 10 || parseInt($(this).val()) < 1){
+                alert("分数必须在1-10之间");
+                $(this).val("");
+            }
+        });
     });
     
     function submitCheck(){
         var sys_id = $("#systemuser").val();
         var checkDate = $("#checkDate").val();
-        
-        var answer = $("input[name='answer']").val();
+
+
         var answer1 = $("#answer1").val();
         var answer2 = $("#answer2").val();
         
+        var answer0 = "";
         jQuery("input[name='answer']").each(function(){
-            alert(jQuery(this).val());
+            answer0 += jQuery(this).val() +"-|-";
 	    });
-        alert(sys_id);
-        alert(checkDate);
-        alert(answer1);
-        alert(answer2);
-        for(var i=1; i < answer.length; i++){
-            alert(answer[i]);
-        }
+        answer0 += answer1+"-|-"+answer2+"-|- ";
+        
+        $.post("/Examination2.0/checkAnswer_subCheckAnswer.action", {
+            sys_id:sys_id , checkDate:checkDate, answer:answer0 
+        }, function(json) {
+            var strJSON = JSON.parse(json);
+            if(strJSON.responseCode == 0){
+                alert("评教成功");
+            }else{
+                alert(strJSON.errorMessage);
+            }
+        });
     }
+    
+    
 </script>
 </p>
 <table width="700" border="1" align="center" cellspacing="0" id="ctable">
@@ -47,11 +61,11 @@
                 <select id="systemuser">
                 </select>
             </td> 
-            <td>时间：
+            <td>评教时间：
                 <input type="text" id="checkDate" readonly="readonly"
                 onclick="fPopCalendar(event,this,this)" onfocus="this.select()" />
             </td> 
-            <td>得分（满分10分)</td>
+            <td>得分（每项满分10分)</td>
         </tr>
         <tr>
             <td rowspan="12" style="text-align:center;">理论教学</td>
@@ -164,11 +178,11 @@
         </tr>
         <tr>
             <td colspan="2">你对教学中最满意的事情是:</td>
-            <td colspan="2"><input type="text" name="answer1" size="70" maxlength="70"></td>
+            <td colspan="2"><input type="text" name="answer1" id="answer1" size="70" maxlength="70"></td>
         </tr>
         <tr>
             <td colspan="2">你对教学中最不满的事情是:</td>
-            <td colspan="2" class="answer2"><input type="text" name="answer2" size="70" maxlength="70"></td>
+            <td colspan="2"><input type="text" name="answer2" id="answer2" size="70" maxlength="70"></td>
         </tr>
 
 </table>
@@ -184,4 +198,8 @@
     <td><input name="btnView" type="button" onClick="submitCheck()" value="提交" /> </td>
   </tr>
 </table>
+<br />
+<br />
+<br />
+<br />
 

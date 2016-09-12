@@ -1,6 +1,11 @@
 package com.yc.webexam.actions;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
@@ -9,6 +14,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import javax.annotation.Resource;
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
@@ -23,6 +29,7 @@ import org.springframework.context.annotation.Scope;
 
 import com.alibaba.fastjson.JSON;
 import com.yc.biz.ADailyTalkBiz;
+import com.yc.biz.ExamineeBiz;
 import com.yc.biz.ExamineeClassBiz;
 import com.yc.biz.LabAnswerBiz;
 import com.yc.biz.LabPaperBiz;
@@ -32,7 +39,6 @@ import com.yc.biz.PointPaperBiz;
 import com.yc.biz.SubjectBiz;
 import com.yc.biz.WritingAnswerBiz;
 import com.yc.biz.WritingPaperBiz;
-
 import com.yc.po.ExamineeClass;
 import com.yc.po.PointAnswer;
 import com.yc.po.PointInfo;
@@ -196,7 +202,10 @@ public class ExamAction extends BaseAction implements ServletRequestAware,
 	
 	@Resource(name = "pointAnswerBiz")
 	private PointAnswerBiz pointAnswerBiz;
-	
+
+    @Resource(name = "pointAnswerBiz")
+    private ExamineeBiz examineeBiz;
+    
 	public void setPointAnswerBiz(PointAnswerBiz pointAnswerBiz) {
 		this.pointAnswerBiz = pointAnswerBiz;
 	}
@@ -390,7 +399,6 @@ public class ExamAction extends BaseAction implements ServletRequestAware,
 		String examineeName = request.getParameter("examineeName");
 		String spareTime = request.getParameter("spareTime");
 		// String examineeClass = request.getParameter("examineeClass");
-		System.out.println(paperId+","+spareTime+","+examineeName);
 		writingAnswerBiz.updateSpareTime(paperId, examineeName, spareTime);
 	}
 
@@ -402,7 +410,6 @@ public class ExamAction extends BaseAction implements ServletRequestAware,
 		String paperId = request.getParameter("paperId");
 		String examineeName = UTFUtil.Utf8Util(request.getParameter("examineeName").trim());
 		String answer = request.getParameter("answer");
-		System.out.println(paperId+","+examineeName+","+answer);
 		try {
 			// 找现有的答案
 			String strA = writingAnswerBiz.searchAnswer(paperId, examineeName);
@@ -814,7 +821,6 @@ public class ExamAction extends BaseAction implements ServletRequestAware,
 						for(String as:answer){
 							String psid=as.substring(0,as.indexOf("-"));  //知识点编号
 							String psw=as.substring(as.indexOf("-")+1);  //评分
-							//System.out.println(psid+"\t"+ct);
 							if(psid.trim().equals(ct.trim())){
 								for(PointInfo pi:lookPointInfo){
 									if(psid.trim().equals(pi.getPid()+"")){
@@ -844,4 +850,33 @@ public class ExamAction extends BaseAction implements ServletRequestAware,
 			out.close();
 		}
 	}
+	
+	
+	private String username;
+	private File file;
+	private String fileFileName;
+	private String fileContentType;
+
+	public String updateExcel() throws Exception
+    {
+        String root = ServletActionContext.getServletContext().getRealPath("/upload");
+        InputStream is = new FileInputStream(file);
+        OutputStream os = new FileOutputStream(new File(root, fileFileName));
+        System.out.println("----------fileFileName: " + fileFileName);
+        // 因为file是存放在临时文件夹的文件，我们可以将其文件名和文件路径打印出来，看和之前的fileFileName是否相同
+        System.out.println("----------file: " + file.getName());
+        System.out.println("----------file: " + file.getPath());
+        
+        byte[] buffer = new byte[500];
+        int length = 0;
+        while(-1 != (length = is.read(buffer, 0, buffer.length)))
+        {
+            os.write(buffer);
+        }
+        os.close();
+        is.close();
+        
+        return SUCCESS;
+    }
+	
 }

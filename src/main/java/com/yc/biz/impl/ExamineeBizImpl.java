@@ -81,6 +81,21 @@ public class ExamineeBizImpl implements ExamineeBiz
 		return null;
 	}
 	
+	@SuppressWarnings("unchecked")
+    @Override
+    public Examinee getExamineeById(String id)
+    {   List<Examinee> list=null;
+    
+            String hql = "from Examinee e where e.id=?";
+            String params[] = { id };
+            list = (List<Examinee>) baseDao.search(hql, params);
+        
+        if (list != null && list.size() > 0){
+            return list.get(0);
+        }
+        return null;
+    }
+	
 
 	@Override
 	public List<Examinee> findAllStudent(int classId)
@@ -257,10 +272,10 @@ public class ExamineeBizImpl implements ExamineeBiz
 	}
 
 	@Override
-	public List<String> findAllStuNameByClassName(String className) {
-		String hql = "select e.name from Examinee e where  e.examineeClass.className=?";
+	public List<Examinee> findAllStuNameByClassName(String className) {
+		String hql = "from Examinee e where  e.examineeClass.className=?";
 		String params[] = {className };
-		List<String> list = (List<String>) baseDao.search(hql, params);
+		List<Examinee> list = (List<Examinee>) baseDao.search(hql, params);
 		if (list != null && list.size() > 0)
 		{
 			return list;

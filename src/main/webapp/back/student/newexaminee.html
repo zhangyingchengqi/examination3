@@ -78,14 +78,20 @@
 									<tr>
 										<td align="right" class="prompt">*</td>
 										<td colspan="5" align="left"><textarea cols="10" rows="3" 
-												name="examineeNames" class="texta" id="examineeNames"></textarea>
+												name="examineeNames" class="texta" id="examineeNames"></textarea><br /><br /><br />
 										</td>
 									</tr>
 									<tr>
-									   <td colspan="2">
-									       <br><div align="left" class="fontColor">使用模板批量导入学员信息：</div></td> 
-									   <td colspan="2"><br><a href="#" >下载excel模板</a></td>
-									   <td colspan="2"><br><a href="#" >导入excel班级学员信息<input type="file" id="path" /></a></td>
+									   <td colspan="6" style="border: 1px dashed #BBBBBB;">
+									       <br /><span align="left" class="fontColor">使用模板批量导入学员信息：</span>&nbsp;&nbsp;&nbsp;
+									       <a href="../../template/Examinee.xls" >下载模板</a>&nbsp;&nbsp;&nbsp;
+	                                            <form name="Form2" action="{pageContext.request.contextPath}/fileUpload.action" method="post"  enctype="multipart/form-data">
+													<span class="fontColor">导入excel班级学员信息</span>
+													<input type="file" name="path" id="path" />
+													<input type="submit" value="确定"/>
+												</form>
+                                           <br /><br />
+                                       </td>
 									</tr>
 									<tr>
 										<td><br> <br>

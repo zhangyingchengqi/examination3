@@ -25,6 +25,9 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
 	<bean id="course" class="com.yc.webexam.actions.CourseAction"
 		scope="prototype">
 	</bean>
+	<bean id="fileUpload" class="com.yc.webexam.actions.FileUploadAction"
+        scope="prototype">
+    </bean>
 
 	<bean id="subject" class="com.yc.webexam.actions.SubjectAction"
 		scope="prototype">
@@ -47,8 +50,11 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
 	<bean id="checking" class="com.yc.webexam.actions.CheckingAction"
 		scope="prototype"></bean>
 
-	<bean id="upload" class="com.yc.webexam.actions.UploadAction"
+	<bean id="checkAnswer" class="com.yc.webexam.actions.CheckAnswerAction"
 		scope="prototype"></bean>
+		
+	<bean id="upload" class="com.yc.webexam.actions.UploadAction"
+        scope="prototype"></bean>
 		
 	<bean id="dataarraylist" class="com.yc.webexam.actions.DataarraylistAction"
 		scope="prototype"></bean>

@@ -1,13 +1,51 @@
-//显示班级下拉框
-	$(function(){
-		//显示班级下拉框
-			$.ajax({
-				url:"/Examination2.0/dataarraylist_findAllExamineeClass.action",
-				type:"post",
-				datatype:"json",
-				success:showAllExamineeClass
-			});	
-	});
+$(function() {
+    $.post("/Examination2.0/direction_direction.action", function(json) {
+        var strJSON = json;
+        var obj = eval(strJSON);// 转换后的JSON对象
+        var result = '';
+        for (var i = 0; i < obj.length; i++) {
+            result += '<option value ="' + obj[i].did + "-" + obj[i].classname
+                    + '">' + obj[i].dname + '</option>';
+        }
+        $("#direction").append(result);
+    });
+
+  //显示班级下拉框
+      $.ajax({
+          url:"/Examination2.0/dataarraylist_findAllExamineeClass.action",
+          type:"post",
+          datatype:"json",
+          success:showAllExamineeClass
+      }); 
+});
+var did = "";
+function changeDirection() {
+    did = $("#direction").val();
+    var str = did.split("-");
+    did = str[0];
+    classN = str[1];
+    getClassByDid()
+}
+//通过Did获取班级
+function getClassByDid() {
+    $.post("/Examination2.0/examineeclass_getCNumByDid.action", {
+        did : did
+    }, function(json) {
+        var obj = eval(json);// 转换后的JSON对象
+        createClass(obj);
+    });
+}
+function createClass(obj){
+    var optionstr="<option>--请选择--</option>";
+    for(var i=0;i<obj.length;i++){
+        optionstr+="<option value='"+obj[i].className+"' name='stuName'>"+obj[i].className+"</option>";     
+    }
+    $("#examclassid").html(optionstr);
+}
+
+
+
+
 	//把拼好的班级加到班级下拉框中
 	function showAllExamineeClass(data){
 		var examieeClassNames = eval("(" + data + ")");
@@ -16,8 +54,7 @@
 			for(var i=0;i<examieeClassNames.obj.length;i++){
  					examineeClassStr+="<option value='"+examieeClassNames.obj[i]+"'>"+examieeClassNames.obj[i]+"</option>"
 			}
-	$("#examclassid").html(examineeClassStr);	
-		
+			$("#examclassid").html(examineeClassStr);	
 		}
 	}
 	//根据班级名称来查学生的姓名
@@ -35,13 +72,14 @@
 	}
 	function showExamineeNameOption(data){
 		var classNameInfos = eval("(" + data + ")");
+		var obj = classNameInfos.obj;
 		var optionstr="<option>--请选择--</option>";
 		if(classNameInfos.responseCode==0){
-			for(var i=0;i<classNameInfos.obj.length;i++){
-				optionstr+="<option value='"+classNameInfos.obj[i]+"' name='stuName'>"+classNameInfos.obj[i]+"</option>";	  
-			}
+		    for(var i=0;i<obj.length;i++){
+	            optionstr+="<option value='"+obj[i]+"' name='stuName'>"+obj[i]+"</option>";     
+	        }
 		}
-		$("#examineeName").html(optionstr);
+	    $("#examineeName").html(optionstr);
 	}
 	//查询测评信息（查表pointAnswer中的信息）
 	function findAnswerInfo(){

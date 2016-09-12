@@ -17,17 +17,19 @@
 	//页面加载时, 设置初始化数据
 
 	$(function() {
-	    $.post("/Examination2.0/direction_direction.action", function(json){
-            var strJSON=json;
-            var obj = eval(strJSON);//转换后的JSON对象
-            var result ='';
-            for(var i=0;i<obj.length;i++){
-                result += '<option value ="'+obj[i].did+'">'+obj[i].dname+'</option>';
-            }
-            $("#direction").append(result);
-        });
-	    
-	    
+	    $.post("/Examination2.0/direction_direction.action", function(json) {
+	        var strJSON = json;
+	        var obj = eval(strJSON);// 转换后的JSON对象
+	        var result = '';
+	        for (var i = 0; i < obj.length; i++) {
+	            result += '<option value ="' + obj[i].did + "-" + obj[i].classname
+	                    + '">' + obj[i].dname + '</option>';
+	        }
+	        $("#directionName").append(result);
+	        
+	        getedition(1);
+	    });
+	        
 		var r1='';
 		r1+='<option value="0%">请选择</option>';
 		for(var a=1;a<=10;a++){
@@ -37,35 +39,132 @@
 		$("#rate2").html(r1);
 		$("#rate3").html(r1);
 		createVersionOption();
-		semester = $('input[name="semester"]:checked').val();
-		version = $('#version').val();
+		semester = "S1";
+		version = $('#editionName').val();
 		createSelectOption(version, semester);
 		createClassOption();
 		hideSubject();
 	})
 	
-	var did = "0";
-	function changeDirection(){
-        did = $("#direction").val();
-        getedition(did);
-    }
-	function getedition(did){
-        $.post("/Examination2.0/course_edition.action", {did:did},function(json){
-            var strJSON=json;
-            var obj = eval(strJSON);//转换后的JSON对象
-            $("#version").html("");
-            $("#version").append('<option value="0">');
-            for ( var i = 0; i < obj.length; i++) {
-                $("#version").append(
-                "<option value='"+obj[i].id+"'>"+ obj[i].editionName + "</option>");
-            }
-        });
-    }
+
+	/* xh */
+	var did = "";
+	var eid = "";
+	var semester = "S1";
+	var snumber = "0";
+	var classN = "";
+	//改变方向
+	function changeDirection() {
+	    did = $("#directionName").val();
+	    var str = did.split("-");
+	    did = str[0];
+	    classN = str[1];
+	    getedition(did);
+        getClassByDid()
+	}
+	//改变版本
+	function changeEdition() {
+	    eid = $("#editionName").val();
+	    var str = eid.split("-");
+	    eid = str[0];
+	    snumber = str[1];
+	    getSemester(snumber);
+
+        createSelectOption(eid, "S1");
+	    getClassByEid()
+	}
+	//改变学期
+	function changeSemester() {
+	    semester = $("#semesterName").val();
+	    var id = 1;
+	    id = parseInt(eid);
+        createSelectOption(id, semester);
+	}
+	//获取版本
+	function getedition(did) {
+	    $.post("/Examination2.0/course_edition.action", {
+	        did : did
+	    }, function(json) {
+	        var strJSON = json;
+	        var obj = eval(strJSON);// 转换后的JSON对象
+	        $("#editionName").html("");
+	        $("#editionName").append('<option value="0">');
+	        for (var i = 0; i < obj.length; i++) {
+	            $("#editionName").append(
+	                    "<option value='" + obj[i].id + "-" + obj[i].semesternum+ "'>"
+	                            + obj[i].editionName + "</option>");
+	        }
+	    });
+	    
+	}
+	//得到学期信息
+	function getSemester(snumber){
+        $("#semesterName").html("");
+        for (var i = 1; i <= snumber; i++) {
+            $("#semesterName").append(
+                    "<option value='S" + i + "'>S" + i + "</option>");
+        }
+	}
+
+	//通过DID获取班级学期数
+	function getECNum() {
+	    $.post("/Examination2.0/examineeclass_getCNumByDid.action", {
+	        did : did
+	    }, function(json) {
+	        var obj = eval(json);// 转换后的JSON对象
+	        var num = obj.length;
+	        var newClassName = classN + (num + 1);
+	        $("#className").val(newClassName);
+	    });
+	}
+	//通过Did获取班级
+	function getClassByDid() {
+	    did = $("#directionName").val();
+	    var str = did.split("-");
+	    did = str[0];
+	    classN = str[1];
+	    getedition(did);
+	    $.post("/Examination2.0/examineeclass_getCNumByDid.action", {
+	        did : did
+	    }, function(json) {
+	        var obj = eval(json);// 转换后的JSON对象
+	        showClass(obj);
+	    });
+	}
+	//通过Eid获取班级
+	function getClassByEid() {
+	    eid = $("#editionName").val();
+	    var str = eid.split("-");
+	    eid = str[0];
+	    snumber = str[1];
+	    $.post("/Examination2.0/examineeclass_getClassByEdition.action", {
+	        eid : eid,
+	    }, function(json) {
+	        var obj = eval(json);// 转换后的JSON对象
+	        showClass(obj);
+	    });
+	}
+
+	function showClass(obj){
+	    $("#examineeClass").html("<option>--请选择--</option>");
+	    if (obj == null) {
+	        $("#examineeClass").append("<option>--请选择--</option>");
+	    }
+	    for ( var i = 0; i < obj.length; i++) {
+	        $("#examineeClass").append(
+	                "<option value='" + obj[i].id + "'>" + obj[i].className
+	                        + "</option>");
+	    }
+	}
+	
+	
+	
+	
+	
 	
 	
 	
 	function loadData() {
-
 		$.ajax({
 			url : "/Examination2.0/initData_editionName.action",
 			type : "post",
@@ -81,15 +180,15 @@
 	//选择学期
 	function checkSemester(s) {
 		semester = s;
-		version = $('#version').val();
+		version = $('#editionName').val();
 		createSelectOption(version, semester);
 		createClassOption();
 		hideSubject();
 	}
 	//选择版本
-	function changeVersion() {
-		semester = $('input[name="semester"]:checked').val();
-		version = $('#version').val();
+	function changeSubject() {
+		semester = $('#semesterName').val();
+		version = $('#editionName').val();
 		createSelectOption(version, semester);
 		hideSubject();
 	}
@@ -98,8 +197,8 @@
 		var check = $('input[name="paperType"]:checked').val();
 		//选定出综合卷
 		if (check == "1") {
-			semester = $('input[name="semester"]:checked').val();
-			version = $('#version').val();
+			semester = $('#semesterName').val();
+			version = $('#editionName').val();
 			$.ajaxSettings.async = false;
 			$
 					.ajax({
@@ -375,7 +474,8 @@
 	
 	//重置
 	function reset(){
-		$("#classes").val("");
+
+		$("#examineeClass").val("");
 		$('#questionCount').val("");
 		$('#paperPwd').val("");
 		$('#examDate').val("");
@@ -389,10 +489,9 @@
 		$("#overCount").val("");
 		$('#remark').val("");
 		//"input[name=jizai]:eq(0)"
-		$("input[name=semester]:eq('S1')").attr("checked",'checked');
-		$("input[name=semester]:eq('S2')").removeAttr("checked");
-		$("input[name=semester]:eq('S3')").removeAttr("checked");
+		$("#semesterName").val("");
 	}
+
 
 	function addWritingPaper() {
 		//确认难易度的百分比是否为100%
@@ -404,8 +503,8 @@
 			return;
 		}
 		
-		var semester = $('input[name="semester"]:checked').val();//学期
-		var classes = $('#classes').find("option:selected").text();//班级
+		var semester = $('#semesterName').val();//学期
+		var classes = $('#examineeClass').val();//班级
 		var questionCount = $('#questionCount').val();//出题数量
 		var paperPwd = $('#paperPwd').val();//密码
 		var examDate = $('#examDate').val();//日期
@@ -417,7 +516,7 @@
 		var paperName = $('#paperName').val();//试卷名
 		var subject = $('#subject').find("option:selected").text();//课程名
 		var remark = $('#remark').val();//试卷说明
-		var edition = $('#version').find("option:selected").text();
+		var edition = $('#editionName').find("option:selected").text();
 		if (paperPwd != paperPwd2) {
 			$('#strPrompt').html("两次输入的密码不一致,请重新输入!")
 			$('#paperPwd').val("");
@@ -553,14 +652,16 @@
                                 <div align="left" class="fontColor">方向:</div></td>
                             <td width="219">
                                 <div align="left">
-                                    <select name="direction" id="direction" onChange="changeDirection()">
+                                    <select name="directionName" id="directionName" onChange="changeDirection()">
+                                        <option value="0" selected="selected">--请选择--</option>
                                     </select>
                                 </div></td>
                             <td width="95">
                                 <div align="left" class="fontColor">版本号:</div></td>
                             <td width="219">
                                 <div align="left">
-                                    <select name="version" id="version" onChange="changeVersion()">
+                                    <select name="editionName" id="editionName" onChange="changeEdition()">
+                                        
                                     </select>
                                 </div></td>
                         </tr>
@@ -569,12 +670,7 @@
 								<div align="left" class="fontColor">学期编号:</div></td>
                             <td width="214">
                                 <div align="left">
-                                    <input name="semester" id="semester" type="radio" value="S1"
-                                        onClick="checkSemester('S1')" checked="checked"> S1 <input
-                                        name="semester" id="semester" type="radio" value="S2"
-                                        onClick="checkSemester('S2')"> S2 <input type="radio"
-                                        id="semester" name="semester" value="S3"
-                                        onClick="checkSemester('S3')"> S3
+                                    <select id="semesterName" onchange="changeSemester()"></select>
                                 </div></td>
 							<td width="95">
 								<div align="left" class="fontColor">课程名称:</div></td>
@@ -591,9 +687,9 @@
 								<div align="left" class="fontColor">班 &nbsp;&nbsp;&nbsp;级:</div></td>
 							<td>
 								<div align="left">
-									<select name="examineeClass" id="classes">
-										<option selected>--请选择班级--</option>
-									</select>
+									<select name='examineeClass' id='examineeClass'>
+					                    <option value="0" selected="selected">--请选择--</option>
+					                </select>
 								</div></td>
 							<td>
 								<div align="left" class="fontColor">出题数量:</div></td>

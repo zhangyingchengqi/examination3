@@ -112,8 +112,6 @@ public class LoginAction extends BaseAction implements ServletRequestAware, Serv
             String password = Encrypt.md5AndSha2(this.request.getParameter("password"));
             String validateCode = this.request.getParameter("validateCode").trim();
 
-            System.out.println("-------------------------:" + password);
-
             // 取出imageCode.jsp中存的验证码
             String rand = (String) mysession.getAttribute("rand");
             if (!validateCode.equals(rand)) {
@@ -342,6 +340,7 @@ public class LoginAction extends BaseAction implements ServletRequestAware, Serv
 	 */
     public void updateInfo() {
         // 汉字进行解码
+        String uid = request.getParameter("uid");
         String examClass = ValueUtil.formatRequestStr(request.getParameter("examClass"));
         String examineeName = UTFUtil.Utf8Util(request.getParameter("name"));
         String realname = UTFUtil.Utf8Util(request.getParameter("realname"));
@@ -352,10 +351,13 @@ public class LoginAction extends BaseAction implements ServletRequestAware, Serv
         String qq = request.getParameter("qq");
         String phone = request.getParameter("phone");
         String address = UTFUtil.Utf8Util(request.getParameter("address"));
+        
+        String school = UTFUtil.Utf8Util(request.getParameter("school"));
+        String grade = UTFUtil.Utf8Util(request.getParameter("grade"));
+        String Professional = UTFUtil.Utf8Util(request.getParameter("Professional"));
+        String bedroom = UTFUtil.Utf8Util(request.getParameter("bedroom"));
 
-        Examinee examinee = (Examinee) mysession.getAttribute("Examinee");
-        Examinee exam = new Examinee();
-        exam = examinee;
+        Examinee exam = examineeBiz.getExamineeById(uid);
         // Examinee exam = new Examinee();
         // exam.setName(examineeName);
         // exam.setExamineeClass(examClass);
@@ -368,10 +370,16 @@ public class LoginAction extends BaseAction implements ServletRequestAware, Serv
         exam.setQq(qq);
         exam.setAddress(address);
         exam.setWechat(wechat);
+        exam.setSchool(school);
+        exam.setGrade(grade);
+        exam.setProfessional(Professional);
+        exam.setBedroom(bedroom);
         // 修改后得到的信息
 
         int flag = examineeBiz.updateExaminee(exam);
+        
         if (flag > 0) {
+            mysession.setAttribute("Examinee", exam);
             try {
                 JsonUtil.jsonOut("1");
             } catch (IOException e) {

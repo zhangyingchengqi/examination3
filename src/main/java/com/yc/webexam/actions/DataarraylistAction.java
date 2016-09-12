@@ -200,7 +200,6 @@ public class DataarraylistAction extends BaseAction {
 						page.setPageSize(displayRows);
 						page.setCurrentPage(pageNume);
 					writingAnswerBiz.searchWritingPaperPageByName(page, wp,wa);
-					//System.out.println(page.getResult().get(0).getExamineeName()+"\t"+page.getResult().get(0).getWritingPaper().getPaperName());
 					for(WritingAnswer w:page.getResult()){
 						w.setAnswer(null);
 						w.setCorrectRate(null);
@@ -268,7 +267,6 @@ public class DataarraylistAction extends BaseAction {
 						wa.setId(Integer.parseInt(waid));
 						
 						wa=writingAnswerBiz.searchPaperById(wp,wa);
-						//System.out.println(page.getResult().get(0).getExamineeName()+"\t"+page.getResult().get(0).getWritingPaper().getPaperName());
 							wa.setCorrectRate(null);
 							wa.setSpareTime(null);
 							wa.getWritingPaper().setAvgScore(null);
@@ -412,7 +410,6 @@ public class DataarraylistAction extends BaseAction {
 							page.setCurrentPage(pageNume);
 							wa.setExamineeName(stuName);
 							writingAnswerBiz.searchWritingPaperPageByName(page, wp,wa);
-							System.out.println(page.getResult().get(0).getExamineeName()+"\t"+page.getResult().get(0).getWritingPaper().getPaperName());
 							for(WritingAnswer w:page.getResult()){
 								w.setAnswer(null);
 								w.setCorrectRate(null);
@@ -637,12 +634,19 @@ public class DataarraylistAction extends BaseAction {
 	public void showExamineeNames1(){
 		String jsonStr="";
 		try {
-			List<String> list= examineeBiz.findAllStuNameByClassName(examClassName);
-			
-			jsonStr=super.writeJson(0, list);
+			List<Examinee> list= examineeBiz.findAllStuNameByClassName(examClassName);
+			if(list != null || list.size() > 0){
+	            List<String> lists = new ArrayList();
+	            for (Examinee exam : list) {
+	                lists.add(exam.getName());
+	            }
+	            jsonStr=super.writeJson(0, lists);
+			}else{
+	            jsonStr=super.writeJson(1, "查询失败！");
+			}
 			
 		} catch (Exception e) {
-			jsonStr=super.writeJson(0, "查询失败！");
+			jsonStr=super.writeJson(1, "查询失败！");
 			logger.error(e);
 		}finally{
 			try {

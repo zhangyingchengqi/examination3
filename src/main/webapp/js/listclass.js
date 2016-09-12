@@ -4,12 +4,12 @@ $(function(){
 	//getclass(semester);
 	$.post("/Examination2.0/examineeclass_showClassList.action",{semester:semester},function(json){
         var obj=$.parseJSON(json);
-    	showClass(obj);
+        showClassInfo(obj);
     });
 });
 
 
-function showClass(obj){ 
+function showClassInfo(obj){ 
     if(obj == null){
         $("#message").text("查询到  0 个班级");
         $("#showlist").html("");
@@ -36,7 +36,6 @@ function showClass(obj){
 }
 
 function deleteClass(count,id){
-	
 	if(!confirm("确定要删除？")){
 		return false;
 	}

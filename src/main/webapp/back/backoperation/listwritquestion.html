@@ -10,7 +10,7 @@
 <script type="text/javascript" src="../../js/createoption.js"></script>
 <script type="text/javascript" src="../../jslib/locale/easyui-lang-zh_CN.js"></script>
 <script type="text/javascript">
-	$(function() {
+	$(function(){
 	    $.post("/Examination2.0/direction_direction.action", function(json){
             var strJSON=json;
             var obj = eval(strJSON);//转换后的JSON对象
@@ -20,8 +20,9 @@
             }
             $("#direction").append(result);
         });
-        
 	    
+	    /* $('#direction').onChange();
+	    $('#direction').trigger('click'); */ 
 	    
 		createVersionOption();
 		semester = $('input[name="semester"]:checked').val();
@@ -29,6 +30,7 @@
 		createSubjectOption(version, semester);
 		showPaperQuestion();
 	});
+	
 	
 	
 	var did = "0";
@@ -52,8 +54,7 @@
     
 		function createSubjectOption(version, semester) {
 		$.ajaxSettings.async = false;
-		$
-				.ajax({
+		$.ajax({
 					url : "/Examination2.0/initData_subject.action",
 					type : "post",
 					data : {
@@ -79,11 +80,6 @@
 						$("#subject").html(optionstr);
 					}
 				});
-	}
-	function cretsubject() {
-		semester = $('input[name="semester"]:checked').val();
-		version = $('#version').val();
-		createSubjectOption(version, semester);
 	}
 	function showPaperQuestion(){
 		$('#back_writingquestion_datagrid').datagrid({
@@ -228,20 +224,22 @@
 						cellspacing="0">
 						
 						<tr>
-                            <td width="109" height="32" class="fontColor">方向:</td>
-                            <td height="32">
-                                <select name="direction" id="direction" onChange="changeDirection()"></select>
+                            <td width="8%" height="32" class="fontColor">方向:</td>
+                            <td height="25%">
+                                <select name="direction" id="direction" onChange="changeDirection()">
+                                </select>
                             </td>
-                            <td width="70" height="32"><span class="fontColor">版本号:</span>
+                            <td width="8%" height="32"><span class="fontColor">版本号:</span>
                             </td>
-                            <td width="296"><select name='version' class='select'
+                            <td width="50%"><select name='version' class='select'
                                 id='version' onChange="changeVersion()">
                             </select></td>
                         </tr>
 						<tr>
-							<td width="109" height="32" class="fontColor"><span class="fontColor">学期名称:</span>
+							<td height="32" class="fontColor"><span class="fontColor">学期名称:</span>
                             </td>
-                            <td width="296"><input name="semester" type="radio"
+                            <td>
+                            <input name="semester" type="radio"
                                 value="S1" id="s1" onClick="cretsubject()"> S1
                                 &nbsp;&nbsp;&nbsp; <input type="radio" name="semester"
                                 value="S2" id="s2" onClick="cretsubject()"> S2
@@ -250,8 +248,8 @@
                                 &nbsp;&nbsp;&nbsp; <input type="radio" name="semester"
                                 value="0" id="all" onClick="cretsubject()" checked="checked"  > 全部
                             </td>
-							<td width="70" height="32"><span class="fontColor"><span class="fontColor">科目名称:</span></td>
-                            <td height="32"><select name="subject" id="subject">
+							<td height="32"><span class="fontColor"><span class="fontColor">科目名称:</span></td>
+                            <td><select name="subject" id="subject">
 
                             </select></td>
 						</tr>

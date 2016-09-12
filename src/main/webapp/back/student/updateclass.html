@@ -27,66 +27,59 @@
 					<table width="630" border="0" cellspacing="0" cellpadding="0">
 						<tr>
 							<td>
-								<table width="630" height="403" border="0" cellpadding="0"
+								<table width="630" border="0" cellpadding="0"
 									cellspacing="0">
 									
 									<tr>
-										<td width="10%" height="26" class="fontColor">班级名称:</td>
-										<td width="10%" class="STYLE4"><input name="className" type="text"
+										<td width="10%" height="26" class="fontColor"><br>班级名称:</td>
+										<td width="10%" class="STYLE4"><br><input name="className" type="text"
 											class="text4" id="className" size="10" value="" readonly="readonly"
 											 maxlength="10" />
 										</td>
-										<td width="10%" height="26" class="fontColor">开班时间:</td>
-										<td width="16%" class="STYLE4"><label> <input
+										<td width="10%" height="26" class="fontColor"><br>开班时间:</td>
+										<td width="16%" class="STYLE4"><br><label> <input
 												type="text" id="openTime" readonly="readonly"
 												onclick="fPopCalendar(event,this,this)"
 												onfocus="this.select()" /> </label>
 										</td>
-										<td width="10%" height="26"><span class="fontColor">结束时间:</span>
+										<td width="10%" height="26"><br><span class="fontColor">结束时间:</span>
 										</td>
-										<td width="16%"><span class="STYLE4"> <input type="text"
+										<td width="16%"><br><span class="STYLE4"> <input type="text"
 												id="overTime"
 												onclick="fPopCalendar(event,this,this)"
 												onfocus="this.select()" /></input> </span>
 										</td>
 									</tr>
 									<tr>
-										<td valign="middle" class="fontColor">班级描述:</td>
-										<td rowspan="5" colspan="2"><textarea name="remark"
+										<td valign="middle" class="fontColor"><br>班级描述:</td>
+										<td colspan="5"><br><textarea name="remark"
 												cols="25" rows="2" class="texta" id="textarea"></textarea></td>
 									</tr>
-									<tr valign="top">
-										<td rowspan="6"><table width="100%" height="111"
-												border="0" cellpadding="0" cellspacing="0">
-												<tr>
-													<td width="62%" valign="top" id="addclass_text"><span
-														class="fontColor" id="strPromp"></span>
-													</td>
-													<td align="center" valign="top"><br> <input
-														name="update" type="button" class="inp_L1" id="add3"
-														onMouseOver="this.className='inp_L2'"
-														onMouseOut="this.className='inp_L1'" value="修 改"
-														onClick="submitForm()" /> <label></label>
-													</td>
-												</tr>
-											</table>
-										</td>
-									</tr>
+									<tr>
+                                         <td colspan="4" id="addclass_text"><br><span
+                                             class="fontColor" id="strPromp"></span>
+                                         </td>
+                                         <td colspan="2" align="center" valign="top"><br> <input
+                                             name="update" type="button" class="inp_L1" id="add3"
+                                             onMouseOver="this.className='inp_L2'"
+                                             onMouseOut="this.className='inp_L1'" value="修 改"
+                                             onClick="submitForm()" /> <label></label>
+                                         </td>
+                                    </tr>
 								</table>
 							</td>
 						</tr>
-						
-						<tr>
-                            <td>
-                                <table id="CStable" width="630" height="403" border="0" cellpadding="0">
-                                    
-                                    
-                                </table>
-                            </td>
-                        </tr>
-					</table>
+					</table><br /><br />
 				</td>
-			</tr>
+			</tr>    
+           <tr style="border: 1px dashed #BBBBBB;">
+               <td style="border: 1px dashed #BBBBBB;"><br />
+                   <span class="fontColor">班级的学期信息</span><br /><br />
+                   <table id="CStable" width="630" border="0" cellpadding="0">
+                       
+                   </table><br />
+               </td>
+           </tr>
 		</table>
 	</form>
 </body>

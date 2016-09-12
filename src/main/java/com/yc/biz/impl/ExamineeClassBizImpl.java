@@ -60,7 +60,7 @@ public class ExamineeClassBizImpl implements ExamineeClassBiz {
 
 	public List<ExamineeClass> findExamineeClassBySemester(String semester) {
 		String[] params=new String[]{semester};
-		String sql = "from ExamineeClass e where e.semester=? order by id desc";
+		String sql = "from ExamineeClass e where e.semester=? order by e.id desc";
 		List<ExamineeClass> list=(List<ExamineeClass>) this.baseDao.search(sql,params);
 		if( list!=null&&list.size()>0 ){	
 			return list;
@@ -69,7 +69,7 @@ public class ExamineeClassBizImpl implements ExamineeClassBiz {
 	}
 	public List<String> findExamineeClassAndClassIdBySemester(String semester) {
 		String[] params=new String[]{semester};
-		String sql = "select e.className,e.id from ExamineeClass e where e.semester=? order by createDate desc";
+		String sql = "select e.className,e.id from ExamineeClass e where e.semester=? order by e.createDate desc";
 		List<String> list=(List<String>) this.baseDao.search(sql,params);
 		if( list!=null&&list.size()>0 ){	
 			return list;

@@ -101,7 +101,6 @@
   					}else{
   						optionstr+="<option value=0 >没有数据</option>"
   					}
-  					
   					$("#subject").html(optionstr);
   				}
   			});

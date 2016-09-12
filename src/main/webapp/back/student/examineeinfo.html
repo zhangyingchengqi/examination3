@@ -1,0 +1,83 @@
+<link rel="stylesheet" href="../../css/szindex.css" type="text/css"></link>
+<script src="http://lib.sinaapp.com/js/jquery/1.9.1/jquery-1.9.1.js"></script>
+<script type="text/javascript">
+    !window.jQuery && document.write('<script src=../../js/jquery-1.9.1.js><\/script>');
+</script>
+<script type="text/javascript" src="../../js/examine.js"></script>
+</head>
+
+<body>
+	<form name="form1" method="post">
+		<table width="630" border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<td valign="middle">
+					<p>
+						<img src="images/t06.gif" width="595" height="33">
+					</p>
+					<table width="630" border="0" cellspacing="0" cellpadding="0">
+					    <tr>
+                            <td width="25%" style="text-align:right;"><br/><br/></td>
+                            <td width="25%"><br/><input style="visibility:hidden;" type='text' name='uid' id="uid" /><br/></td>
+                            <td width="25%" style="text-align:right;"><br/><br/></td>
+                            <td width="25%"><br/><br/></td>
+                        </tr>
+						<tr>
+							<td width="25%" style="text-align:right;"><br/>登录名：<br/></td>
+							<td width="12%"><br/><input type='text' name='name' id="name" /><br/></td>
+							<td width="25%" style="text-align:right;"><br/>真实名：<br/></td>
+							<td width="12%"><br/><input type='text' name='realname' id="realname" /><br/></td>
+						</tr>
+						<tr>
+							<td style="text-align:right;"><br/>性别：<br/></td>
+							<td><br/>
+                                <input type="radio" name="sex" value="1" id="nan" checked="checked" /> 男
+                                <input type="radio" name="sex" value="0" id="nv" /> 女<br/>
+                            </td>
+							<td style="text-align:right;"><br/>年龄：<br/></td>
+							<td><br/><input type='text' name='age' id="age" /><br/></td>
+						</tr>
+						<tr>
+							<td style="text-align:right;"><br/>手机号：<br/></td>
+							<td><br/><input type='text' name='phone' id="phone" /><br/></td>
+							<td style="text-align:right;"><br/>身份证号：<br/></td>
+							<td><br/><input type='text' name='idcard' id="idcard" /><br/></td>
+						</tr>
+						<tr>
+							<td style="text-align:right;"><br/>微信：<br/></td>
+							<td><br/><input type='text' name='wechat' id="wechat" /><br/></td>
+							<td style="text-align:right;"><br/>QQ：<br/></td>
+							<td><br/><input type='text' name='qq' id="qq" /><br/></td>
+						</tr>
+						<tr>
+							<td style="text-align:right;"><br/>学校：<br/></td>
+							<td><br/><input type='text' name='school' id="school" /><br/></td>
+							<td style="text-align:right;"><br/>年级：<br/></td>
+							<td><br/><input type='text' name='grade' id="grade" /><br/></td>
+						</tr>
+						<tr>
+							<td style="text-align:right;"><br/>专业：<br/></td>
+							<td><br/><input type='text' name='Professional' id="Professional" /><br/></td>
+							<td style="text-align:right;"><br/>寝室：<br/></td>
+							<td><br/><input type='text' name='bedroom' id="bedroom" /><br/></td>
+						</tr>
+						<tr>
+							<td style="text-align:right;"><br/>联系地址：<br/></td>
+							<td colspan="3"><br/><input type='text' name='address' id="address" /><br/></td>
+						</tr>
+						<tr>
+						    <td><br/><br/></td>
+                            <td><br/><br/></td>
+                            <td>
+                                <br/><input name="add" id="add" type="button" class="inp_L1" value="更  新" onMouseOver="this.className='inp_L2'"
+                                    onMouseOut="this.className='inp_L1'" onClick="updateExaminee()" />
+                            <br/></td>
+                            <td><br/>
+                                <input name="rest" type="reset" id="rest" class="inp_L1" value="返  回" onMouseOver="this.className='inp_L2'"
+                                    onMouseOut="this.className='inp_L1'" onClick="backPage()" />
+                            <br/></td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+		</table>
+	</form>

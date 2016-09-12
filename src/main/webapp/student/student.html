@@ -95,6 +95,9 @@
 				});
 			}
 		}
+		
+
+        $("body").layout('collapse','east');
 	}
 </script>
 </head>
@@ -235,6 +238,7 @@
                     var upExamClass=$('#upExamClass').val();
                     var upUname=$('#upUname').val();
                     
+                    var uid = $('#uid').val();
                     var realname = $('#realname').val();
                     var age = $('#age').val();
                     var sex = $('input:radio:checked').val();
@@ -244,8 +248,13 @@
                     var phone = $('#phone').val();
                     var address =$('#address').val();
                     
+                    var school = $('#school').val();
+                    var grade = $('#grade').val();
+                    var Professional = $('#Professional').val();
+                    var bedroom =$('#bedroom').val();
                     
-                    $.getJSON('/Examination2.0/login_updateInfo.action', {examClass:upExamClass,name:upUname,realname:realname,age:age,sex:sex,idcard:idcard,wechat:wechat,qq:qq,phone:phone,address:address}, function(data) {
+                    
+                    $.getJSON('/Examination2.0/login_updateInfo.action', {uid:uid,examClass:upExamClass,name:upUname,realname:realname,age:age,sex:sex,idcard:idcard,wechat:wechat,qq:qq,phone:phone,address:address,school:school,grade:grade,Professional:Professional,bedroom:bedroom}, function(data) {
                         if(data==0){
                             alert('修改个人信息不成功');
                             return;
@@ -304,6 +313,12 @@
         </script>
             <table cellpadding="5" align="center" >
                 <tr>
+                    <td>编号:</td>
+                    <td><input class="easyui-validatebox textbox" type="text"
+                        id="uid" style="background:#F5F5F5;" disabled="disabled"></input>
+                    </td>
+                </tr>
+                <tr>
                     <td>班级:</td>
                     <td><input class="easyui-validatebox textbox" type="text"
                         id="upExamClass" style="background:#F5F5F5;" disabled="disabled"></input>
@@ -356,6 +371,30 @@
                     <td>手机:</td>
                     <td><input class="easyui-validatebox textbox" type="text"
                         id="phone" style="background:#F5F5F5;" onblur="checkphone()"></input>
+                    </td>
+                </tr>
+                <tr>
+                    <td>所在学校:</td>
+                    <td><input class="easyui-validatebox textbox" type="text"
+                        id="school" style="background:#F5F5F5;"></input>
+                    </td>
+                </tr>
+                <tr>
+                    <td>年级:</td>
+                    <td><input class="easyui-validatebox textbox" type="text"
+                        id="grade" style="background:#F5F5F5;"></input>
+                    </td>
+                </tr>
+                <tr>
+                    <td>专业:</td>
+                    <td><input class="easyui-validatebox textbox" type="text"
+                        id="Professional" style="background:#F5F5F5;"></input>
+                    </td>
+                </tr>
+                <tr>
+                    <td>寝室号:</td>
+                    <td><input class="easyui-validatebox textbox" type="text"
+                        id="bedroom" style="background:#F5F5F5;"></input>
                     </td>
                 </tr>
                 <tr>
@@ -500,7 +539,7 @@
 	</div>
 
 	<!-- 东边 -->
-	<div data-options="region:'east',split:true,title:'工具箱'"
+	<div data-options="region:'east',split:true,title:'工具箱'" 
 		style="width:170px;padding:10px;">
 		<div id="date" class="easyui-calendar" style="width:150px;height:150px;"></div>
 	</div>

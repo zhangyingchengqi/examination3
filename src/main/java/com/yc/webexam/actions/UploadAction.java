@@ -156,7 +156,6 @@ public class UploadAction extends ActionSupport {
             try {
                 fis.close();
             } catch (IOException e) {
-                System.out.println("FileInputStream关闭失败");
                 e.printStackTrace();
             }
         }
@@ -164,7 +163,6 @@ public class UploadAction extends ActionSupport {
             try {
                 fos.close();
             } catch (IOException e) {
-                System.out.println("FileOutputStream关闭失败");
                 e.printStackTrace();
             }
         }

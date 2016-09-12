@@ -199,7 +199,6 @@ ServletResponseAware {
 		String exaimineeNames=listClassPage.getExamineeNames();
 		String className=listClassPage.getClassName();
 		int classId=examineeClassBiz.getClassIdOfname(className);
-		System.out.println("------------"+exaimineeNames+"---"+pwd+"----"+className+"----"+classId);
 //		ExamineePK pk=new ExamineePK();
 //		ExamineeClass examineeClass=new ExamineeClass();
 //		Examinee examinee=new Examinee();
@@ -303,18 +302,22 @@ ServletResponseAware {
         String createDate=request.getParameter("createDate").toString().trim();
         String overDate=request.getParameter("overDate").toString().trim();
         String remark=request.getParameter("remark").toString().trim();
+
         
-        ClassSemester classSemester = new ClassSemester();
-        classSemester.setId(Integer.parseInt(id));
-        classSemester.setStarttime(createDate);
-        classSemester.setEndtime(overDate);
-        classSemester.setRemark(remark);
         try {
-            classSemesterBiz.updateClassSemester(classSemester);
-        
-            jsonStr=super.writeJson(0, "班级学期信息更新成功");
+            ClassSemester classSemester = classSemesterBiz.findClassSemesterById(id);
+            if(classSemester!= null){
+                classSemester.setStarttime(createDate);
+                classSemester.setEndtime(overDate);
+                classSemester.setRemark(remark);
+                
+                classSemesterBiz.updateClassSemester(classSemester);
+                jsonStr=super.writeJson(0, "班级学期信息更新成功");
+            }else{
+                jsonStr=super.writeJson(1, "班级学期信息更新出现异常");
+            }
         } catch (Exception e) {
-            jsonStr=super.writeJson(1, "新增班级出现异常"+e.toString());
+            jsonStr=super.writeJson(1, "班级学期信息更新出现异常"+e.toString());
         }finally{
             try {
                 JsonUtil.jsonOut(jsonStr);
@@ -342,7 +345,28 @@ ServletResponseAware {
     }
     
 	
-	
+  //通过id获取学生信息
+    public void getExamById(){
+        String id = request.getParameter("id");
+        try{
+            Examinee examinees = examineeBiz.getExamineeById(id);
+            examinees.setExamineeClass(null);
+            examinees.setPointAnswers(null);
+            
+            if(examinees != null){
+                jsonStr=super.writeJson(0, examinees);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            jsonStr=super.writeJson(1, "修改出现异常"+e.toString());
+        }finally{
+            try {
+                JsonUtil.jsonOut(jsonStr);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 	//修改全班考生的密码
 		public void updateAllExaminee() throws IOException{
 			String className=listClassPage.getClassName();
@@ -458,20 +482,21 @@ ServletResponseAware {
 		String className=listClassPage.getClassName();
 
 		try {
-			List<String> examinee=examineeBiz.findAllStuNameByClassName(className);
+			List<Examinee> examinee=examineeBiz.findAllStuNameByClassName(className);
 			List<ListClassPage> list = new ArrayList<ListClassPage>();
 			if(examinee!=null  &&  examinee.size()>0){
-				for(int i=0;i<examinee.size();i++){
+				for(Examinee exam : examinee){
 					ListClassPage  listClassPage=new ListClassPage();
-					listClassPage.setName(examinee.get(i));
+                    listClassPage.setId(exam.getId());
+					listClassPage.setName(exam.getName());
 					listClassPage.setClassName(className);
-					list.add(i,listClassPage);
+					listClassPage.setEid(exam.getExamineeClass().getEid());
+					list.add(listClassPage);
 				}
 			}
 
 			
 			jsonStr = JSON.toJSONString(list, SerializerFeature.DisableCircularReferenceDetect); 
-			System.out.println(jsonStr+"-----------------------------------------------------------");
 			JsonUtil.jsonOut(jsonStr);
 		} catch (IOException e) {
 			jsonStr = super.writeJson(0, "查询出现异常"+e.toString());
@@ -500,7 +525,6 @@ ServletResponseAware {
 					int studentCount=examineeClassBiz.searchExamineeCount(examineeClass.get(i).getId());
 					list.get(i).setStudentCount(studentCount);
 				}
-				System.out.println(list);
 				jsonStr = JSON.toJSONString(list, SerializerFeature.DisableCircularReferenceDetect); 
 				JsonUtil.jsonOut(jsonStr);
 			}else{

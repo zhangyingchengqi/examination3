@@ -112,14 +112,23 @@ function updateInfoFun() {
                 $("#upExamClass").val(examClass);
                 $("#upUname").val(uname);
                 
+                $("#uid").val(Examinee.id);
                 $("#realname").val(Examinee.realname);
                 $("#age").val(Examinee.age);
-                $("#sex").val(Examinee.sex);
+                if(Examinee.sex == 1){
+                    $("#sex").val("nan");
+                }else{
+                    $("#sex").val("nv");
+                }
                 $("#idcard").val(Examinee.idcard);
                 $("#wechat").val(Examinee.wechat);
                 $("#qq").val(Examinee.qq);
                 $("#phone").val(Examinee.phone);
                 $("#address").val(Examinee.address);
+                $("#school").val(Examinee.school);
+                $("#grade").val(Examinee.grade);
+                $("#Professional").val(Examinee.professional);
+                $("#bedroom").val(Examinee.bedroom);
             }else{
                 alert("请先登录！！！");
                 location.href = "/Examination2.0/";

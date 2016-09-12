@@ -31,12 +31,6 @@ $(function(){
 								+"			value='修 改' id='"+obj[i].did+"' onclick=chkUpdate("+ obj[i].did +",'dname"+obj[i].did +",'cname"+obj[i].did+"','"+obj[i].dname+"','"+obj[i].remark+"')"
 								+"			onmouseover=this.className='inp_L2'  "
 								+"			onmouseout=this.className='inp_L1' /> "
-								+"	</td>"
-								+"	<td align='center'>"
-								+"		<input name='act' type='button' class='inp_L1' "
-								+"			value='删 除' id='"+obj[i].did+"' onclick='return chkForm(this)' "
-								+"			onmouseover=this.className='inp_L2' "
-								+"			onmouseout=this.className='inp_L1' />"
 								+"	</td></tr> ");
 			
 			if($("#currentUse"+obj[i].did).attr('value')==1){

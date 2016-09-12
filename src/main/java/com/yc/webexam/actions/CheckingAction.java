@@ -608,16 +608,13 @@ public class CheckingAction extends BaseAction implements ServletRequestAware,
 		}
 		
 		
-		
-		
 		List<Integer> checkides=null;
 		try {
 			checkides=checkingBiz.findCheckingAllCheckId(semester,Integer.parseInt(cid), stuname, startdate, enddate, datetime);
-System.out.println(checkides);
 			//如果查到了记录，则执行存储过程
 			if(checkides!=null&&checkides.size()>0){
 				int result = tempBiz.exectueDelTemp(); // 清空临时表中的记录
-				//if (result > 0) {
+				if (result >= 0) {
 					for (Integer str : checkides) {
 						int ctime=0;	//考勤时间段   1.上午   2.下午  3.晚上
 						String sname="";  //学生姓名
@@ -628,7 +625,7 @@ System.out.println(checkides);
 						String checkTime=list.get(0).getCheckTime();
 						String checkResult=list.get(0).getCheckResult();
 						Integer ccid=list.get(0).getExamineeClass().getId();
-					//	list.get(0).getExamineeClass().getClassName();
+						list.get(0).getExamineeClass().getClassName();
 						String className=list.get(0).getExamineeClass().getClassName();
 						int flags=1;
 						while(flags>0){
@@ -661,7 +658,7 @@ System.out.println(checkides);
 							}
 						}
 						// 执行存储过程
-						//tempBiz.exectueCheckingProc(str);
+						tempBiz.exectueCheckingProc(str);
 					}
 
 					// 根据条件获取考勤信息
@@ -670,9 +667,9 @@ System.out.println(checkides);
 				} else {
 					jsonStr = super.writeJson(1, "暂无您要查询的考勤记录");
 				}
-			//}else{
-				//jsonStr=super.writeJson(1, "暂无您要查询的考勤记录");
-			//}
+			}else{
+				jsonStr=super.writeJson(1, "暂无您要查询的考勤记录");
+			}
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
 			jsonStr=super.writeJson(1, "查询出现异常");

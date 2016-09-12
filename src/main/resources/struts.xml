@@ -7,7 +7,7 @@
 
 	<constant name="struts.enable.DynamicMethodInvocation" value="true" />
 	<constant name="struts.devMode" value="true" />
-	<constant name="struts.multipart.maxSize" value="2097152" />
+	<constant name="struts.multipart.maxSize" value="52428800" />
 
 	<!-- struts的对象工厂 ： spring 由spring来创建bean -->
 	<constant name="struts.objectFactory" value="spring" />
@@ -70,6 +70,18 @@
 		</action>
 		<action name="paper_*" class="paper" method="{1}">
 		</action>
+        
+        <action name="fileUpload" class="fileUpload" method="execute">
+            <!-- 动态设置savePath的属性值 -->
+            <param name="savePath">/upload</param>
+            <interceptor-ref name="fileUpload">
+                <!-- 文件大小, 以字节为单位 -->
+                <param name="maximumSize">10500000</param>
+            </interceptor-ref>
+            <!-- 默认拦截器必须放在fileUpload之后，否则无效 -->
+            <interceptor-ref name="defaultStack" />
+        </action>
+        
 		<action name="exam_*" class="exam" method="{1}">
 			<result name="ready_success" type="redirect">Jsp/examinee/writingpaper.html
 			</result>
@@ -81,6 +93,9 @@
 			<result name="talk_success" type="redirect">student/showadailytalk.html
 			</result>
 		</action>
+		
+		<action name="checkAnswer_*" class="checkAnswer" method="{1}">
+        </action>
 
 		<action name="validateuser_*" class="validateuser" method="{1}">
 		</action>

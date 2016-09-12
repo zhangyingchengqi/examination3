@@ -64,6 +64,14 @@ public class Examinee implements Serializable {
     private String phone ;
     @Column(length=100)
     private String address ;
+    @Column(length=50)
+    private String school ;
+    @Column(length=50)
+    private String grade ;
+    @Column(length=50)
+    private String Professional ;
+    @Column(length=50)
+    private String bedroom ;
 
 	
 	 @OneToMany(cascade=CascadeType.ALL)
@@ -237,6 +245,54 @@ public class Examinee implements Serializable {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+
+    public String getSchool() {
+        return school;
+    }
+
+
+    public void setSchool(String school) {
+        this.school = school;
+    }
+
+
+    public String getGrade() {
+        return grade;
+    }
+
+
+    public void setGrade(String grade) {
+        this.grade = grade;
+    }
+
+
+    public String getProfessional() {
+        return Professional;
+    }
+
+
+    public void setProfessional(String professional) {
+        Professional = professional;
+    }
+
+
+    public String getBedroom() {
+        return bedroom;
+    }
+
+
+    public void setBedroom(String bedroom) {
+        this.bedroom = bedroom;
+    }
+
+
+    @Override
+    public String toString() {
+        return "Examinee [id=" + id + ", examineeClass=" + examineeClass + ", name=" + name + ", password=" + password + ", realname=" + realname + ", age="
+                + age + ", sex=" + sex + ", idcard=" + idcard + ", wechat=" + wechat + ", qq=" + qq + ", phone=" + phone + ", address=" + address + ", school="
+                + school + ", grade=" + grade + ", Professional=" + Professional + ", bedroom=" + bedroom + ", pointAnswers=" + pointAnswers + "]";
     }
 
 }

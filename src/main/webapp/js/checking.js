@@ -11,6 +11,7 @@ $(function() {
         $("#directionName").append(result);
     });
     
+    changeDirection();
     
 	semester = "S1";
 	//设置时间选中   上午、下午、晚上
@@ -70,7 +71,7 @@ function getedition(did) {
                             + obj[i].editionName + "</option>");
         }
     });
-    getlassName(did,true);
+    getclassName(did,true);
 }
 
 //获取章节
@@ -83,11 +84,11 @@ function getchapter(sid, semester, flag) {
 
         $("#subjectName").html("");
         $("#subjectName").append('<option value="0">');
-            $("#semester").html("");
+            $("#semesterName").html("");
             for (var i = 1; i <= snumber; i++) {
-                $("#semester").append( "<option value='S" + i + "'>S" + i + "</option>");
+                $("#semesterName").append( "<option value='S" + i + "'>S" + i + "</option>");
             }
-        getlassName(sid,false);
+        getclassName(sid,false);
     });
 }
 
@@ -106,7 +107,7 @@ function getClassByDid() {
     });
 }
 
-function getlassName(id ,flag){
+function getclassName(id ,flag){
     if(flag){
         $.post("/Examination2.0/examineeclass_getCNumByDid.action", {
             did : id
@@ -250,7 +251,7 @@ function CheckingResultInfo(){
 	var date=$("#checkDate").val();   //考勤日期
 	var time=$("#dateTime").val();  //考勤时段
 	var remark=$("#remarkInfo").val();  //备注
-	var semesterNa=$("#semester").find("option:selected").val();  //学期
+	var semesterNa=$("#semesterName").find("option:selected").val();  //学期
 	
 	var resultInfo="";  //考勤结果
 	var count=0; //考勤总数

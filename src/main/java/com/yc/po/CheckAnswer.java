@@ -34,13 +34,13 @@ public class CheckAnswer implements Serializable{
 	
 	@Column(nullable=false)
 	@Temporal(TemporalType.DATE)
-	private Date checkDate;  //考勤日期
+	private Date checkDate;  //评教日期
 	
-	@Column(length=4000,nullable=false)
+	@Column(length=4000)
 	private String answer;    //结果
-	@Column(length=400,nullable=false)
+	@Column(length=400)
 	private String remark;   //备注
-	@Column(nullable=false)
+	@Column()
 	private String status; //状态
 
 	
@@ -114,5 +114,11 @@ public class CheckAnswer implements Serializable{
 
     public void setExaminee(Examinee examinee) {
         this.examinee = examinee;
+    }
+
+    @Override
+    public String toString() {
+        return "CheckAnswer [id=" + id + ", ecid=" + ecid + ", checkDate=" + checkDate + ", answer=" + answer + ", remark=" + remark + ", status=" + status
+                + ", systemUser=" + systemUser + ", examinee=" + examinee + "]";
     }
 }

@@ -77,8 +77,6 @@ public class DirectionAction  extends ActionSupport implements ServletResponseAw
 		
 		result = JSON.toJSONString(currentUse); 
 		
-		
-		System.out.println(result);
 		out.print(result);
 		out.flush();
 		} catch (Exception e) {
